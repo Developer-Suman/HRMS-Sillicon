@@ -86,8 +86,6 @@ namespace HRMS_Silicon.Service.ServiceImpl
             try
             {
                 var departmentToBeDeleted = _unitOfWorkRepoImpl.Repository<Department>().getById(id);
-                 
-
                 _unitOfWorkRepoImpl.Repository<Department>().delete(departmentToBeDeleted);
                 _unitOfWorkRepoImpl.Commit();
 
@@ -99,28 +97,34 @@ namespace HRMS_Silicon.Service.ServiceImpl
             }
         }
 
-        public void ToogleStatus(int Department_id)
+        public bool ToogleStatus(int Department_id)
         {
             try
             {
-                var department = _unitOfWorkRepoImpl.Repository<Department>().getById(Department_id);
-                if (department == null)
-                    throw new Exception();
+                var checkEmployee = _unitOfWorkRepoImpl.Repository<Employee>().Where(x=>x.Department_id == Department_id);
+                /*ar checkEmployees = checkEmployee.SingleOrDefault();*/
 
-
-                if(department.Is_Active)
+                if(checkEmployee != null)
                 {
-                    department.Is_Active = false;
+                    return false;
                 }
                 else
                 {
-                    department.Is_Active = true;
+                    var department = _unitOfWorkRepoImpl.Repository<Department>().getById(Department_id);
+                    if (department.Is_Active)
+                    {
+                        department.Is_Active = false;
+                    }
+                    else
+                    {
+                        department.Is_Active = true;
+                    }
+
+                    _unitOfWorkRepoImpl.Repository<Department>().update(department);
+                    _unitOfWorkRepoImpl.Commit();
+                    return true;
                 }
-
-                _unitOfWorkRepoImpl.Repository<Department>().update(department);
-                _unitOfWorkRepoImpl.Commit();
-               
-
+                
             }
             catch (Exception ex)
             {

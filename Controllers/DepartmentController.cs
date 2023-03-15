@@ -131,15 +131,20 @@ namespace HRMS_Silicon.Controllers
         {
             try
             {
-                EmployeeViewModel obj = new EmployeeViewModel();
-                if(obj.DepartmentViewModel.Department_id != Department_Id)
-                {
-                    //_departmentService.ToogleStatus(Department_Id);
-                    return Json(false);
+                //EmployeeViewModel obj = new EmployeeViewModel();
+                //if(obj.DepartmentViewModel.Department_id != Department_Id)
+                //{
+                //    //_departmentService.ToogleStatus(Department_Id);
+                //    return Json(false);
 
+                //}
+                var result = _departmentService.ToogleStatus(Department_Id);
+                if(result == true)
+                {
+                    return Json(true);
                 }
-                _departmentService.ToogleStatus(Department_Id);
-                return Json(true);
+
+                return Json(false);
             }
             catch (Exception ex)
             {

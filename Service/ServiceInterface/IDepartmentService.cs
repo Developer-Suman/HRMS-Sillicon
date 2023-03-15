@@ -15,7 +15,7 @@ namespace HRMS_Silicon.Service.ServiceInterface
         List<DepartmentViewModel> GetAll();
         void delete(int id);
 
-        void ToogleStatus(int Department_id);
+        bool ToogleStatus(int Department_id);
         //void active(int Department_id);
         //void inactive(int Department_id);
 

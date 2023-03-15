@@ -32,6 +32,7 @@ namespace HRMS_Silicon.Repository.RepoInterface
         
         //Finds a set of record that matches the passed expression.
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
+       T Where(Expression<Func<T, bool>> expression);
 
         //Add a list of records
         void AddRange(IEnumerable<T> entities);

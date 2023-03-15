@@ -87,5 +87,9 @@ namespace HRMS_Silicon.Repository.RepoImplementation
             _applicationDbContext.SaveChanges();
         }
 
+        public T Where(Expression<Func<T, bool>> expression)
+        {
+            return _applicationDbContext.Set<T>().FirstOrDefault(expression);
+        }
     }
 }
