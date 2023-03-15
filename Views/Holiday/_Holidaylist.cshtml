@@ -1,0 +1,131 @@
+﻿@model HRMS_Silicon.ViewModel.HolidayIndexViewModel
+
+<div class="row" id="list-of-holiday">
+    <div class="col-md-6 col-lg-12">
+        <div class="card">
+            <div class="card-header  border-0">
+                <h4 class="card-title">Holiday Lists</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="hr-holiday_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+
+                        <div class="col-sm-12">
+                            <table class="table table-vcenter text-nowrap table-bordered border-bottom dataTable no-footer" id="hr-holiday" role="grid" aria-describedby="hr-holiday_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">SN.</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 73.6875px;">Holiday's Name</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">Date</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">Description</th>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <th class="border-bottom-0 sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 70.7344px;">Actions</th>
+                                        }
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+
+                                    @{ int i = 1; }
+                                    @foreach (var item in Model.HolidayPagedList)
+                                    {
+                                        if (item.Holiday_Id != 0)
+                                        {
+
+                                    <tr role="row" class="odd" data-id="@item.Holiday_Id">
+                                        <td>@(i++)</td>
+
+                                        <td>
+
+                                            @Html.DisplayFor(modelItem => item.HolidayName)
+
+                                        </td>
+                                        <td>
+                                            @item.HolidayDate.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @item.Description
+                                        </td>
+
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <td>
+                                                <a class="btn btn-primary btn-icon btn-sm btnUpdate" data-ajax="true" asp-route-id="@item.Holiday_Id" data-id="@item.Holiday_Id" data-toggle="modal" data-target=".holiday-modal">
+                                                    Edit  <i class="feather feather-edit" data-toggle="tooltip" data-original-title="Edit"></i>
+                                                </a>
+
+                                                <a class="btn btn-danger btn-icon btn-sm delete-btn" @*asp-action="Delete"*@ data-ajax="true" data-id="@item.Holiday_Id" data-toggle="modal" data-target="#holidaymodal" data-original-title="Delete">Delete <i class="feather feather-trash-2"></i></a>
+
+
+                                            </td>
+                                        }
+                                        </tr>
+
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="hr-holiday_paginate">
+
+
+                                <ul class="pagination">
+                                    @if (Model.HolidayPagedList.PageIndex > 1)
+                                    {
+                                        <li class="paginate_button page-item previous" id="hr-holiday_previous">
+                                            <a asp-action="Index"
+                                               asp-route-pageNumber="@(Model.HolidayPagedList.PageIndex - 1)"
+                                               aria-controls="hr-holiday" data-dt-idx="0" tabindex="0" class="page-link">
+                                                Previous
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (Model.HolidayPagedList.PageIndex < Model.HolidayPagedList.TotalPages)
+                                    {
+                                        <li class="paginate_button page-item next " id="hr-holiday_next">
+                                            <a asp-action="Index"
+                                               asp-route-pageNumber="@(Model.HolidayPagedList.PageIndex + 1)"
+                                               aria-controls="hr-holiday" data-dt-idx="3" tabindex="0" class="page-link ">
+                                                Next
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $(".btnUpdate").on('click', function () {
+            debugger
+            var id = $(this).data("id");
+            $.ajax({
+                type: "Get",
+                url: "/Holiday/Edit",
+                data: { "id": id },
+                success: function (response) {
+                    debugger
+                    $('#holiday-content').html(response);
+                }
+            })
+        })
+    })
+    
+</script>

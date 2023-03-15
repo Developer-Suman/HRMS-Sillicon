@@ -1,0 +1,102 @@
+﻿@model HRMS_Silicon.ViewModel.EmployeeViewModelDetails
+
+<div class="row" id="list-of-employee">
+    <div class="col-md-6 col-lg-12">
+        <div class="card">
+            <div class="card-header  border-0">
+                <h4 class="card-title">Employee Lists</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="hr-employee_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+
+                        <div class="col-sm-12">
+                            <table class="table table-vcenter text-nowrap table-bordered border-bottom dataTable no-footer" id="hr-employee" role="grid" aria-describedby="hr-employee_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-employee" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 73.6875px;">EmployeeId</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-employee" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 73.6875px;">EmployeeName</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-employee" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">Department</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-employee" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">Designation</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-employee" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">Contact</th>
+
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-employee" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">Action</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model.EmployeePagedList)
+                                        {
+                                            <tr>
+                                                <td>@item.Employee_Id</td>
+                                                <td>@item.First_name @item.Last_Name</td>
+                                                <td>@item.DepartmentViewModel.Department_name</td>
+                                                <td>@item.DesignationViewModel.Designation_name</td>
+                                                <td>
+                                                    @item.Contact_1
+                                                    @if (item.Contact_2 != null)
+                                                    {
+                                                        <span>, @item.Contact_2</span>
+                                                    }
+                                                </td>
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    <td>
+                                                        <a class="btn btn-outline-info btn-icon btn-sm View-Details" id="@item.Employee_Id" data-toggle="modal" >
+                                                            View  <i class="feather feather-file" data-toggle="tooltip" data-original-title="View Salary Details"></i>
+                                                        </a>
+
+                                                        <!--<a class="btn btn-info btn-icon btn-sm delete-btn"--> @*asp-action="Delete"*@ <!--data-ajax="true" data-id="@item.Employee_Id" data-toggle="modal" data-target="#holidaymodal" data-original-title="Delete">Delete <i class="feather feather-trash-2"></i></a>-->
+
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="hr-employee_paginate">
+
+
+                                <ul class="pagination">
+                                    @if (Model.EmployeePagedList.PageIndex > 1)
+                                    {
+                                        <li class="paginate_button page-item previous" id="hr-employee_previous">
+                                            <a asp-action="SalaryDetails" asp-controller="Payroll"
+                                               asp-route-pageNumber="@(Model.EmployeePagedList.PageIndex - 1)"
+                                               aria-controls="hr-employee" data-dt-idx="0" tabindex="0" class="page-link">
+                                                Previous
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (Model.EmployeePagedList.PageIndex < Model.EmployeePagedList.TotalPages)
+                                    {
+                                        <li class="paginate_button page-item next " id="hr-employee_next">
+                                            <a asp-action="SalaryDetails" asp-controller="Payroll"
+                                               asp-route-pageNumber="@(Model.EmployeePagedList.PageIndex + 1)"
+                                               aria-controls="hr-employee" data-dt-idx="3" tabindex="0" class="page-link ">
+                                                Next
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

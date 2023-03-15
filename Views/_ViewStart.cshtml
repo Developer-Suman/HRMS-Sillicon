@@ -1,0 +1,12 @@
+﻿@{
+
+    @using Microsoft.AspNetCore.Identity
+    @*@using TaskManagementSystem.Areas.Identity.Data*@
+    @inject SignInManager<ApplicationUser> SignInManager
+    @inject UserManager<ApplicationUser> UserManager
+    @using Microsoft.AspNetCore.Http
+    @inject IHttpContextAccessor HttpContextAccessor
+
+
+    Layout = "_Layout";
+}

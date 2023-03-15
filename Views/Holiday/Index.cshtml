@@ -1,0 +1,300 @@
+﻿@model HRMS_Silicon.ViewModel.HolidayIndexViewModel
+@{
+    ViewData["Title"] = "Holiday";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet" />
+<body>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row" id="create-form">
+            <div class="col-md-6 col-lg-12">
+                <div class="card">
+                    <div class="Alert"></div>
+                    <div class="card-header border-bottom-0">
+                        <h4 class="card-title">Add Holiday</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="formIdCreateHoliday" class="form-horizontal" asp-action="Create" asp-route-returnUrl="" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-md-3 form-label">Holiday's Name</label>
+                                <div class="col-md-9">
+                                    <input asp-for="Holiday.HolidayName" class="form-control" id="inputName" placeholder="Holiday's Name">
+                                    <span asp-validation-for="Holiday.HolidayName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-md-3 form-label">Holiday Date</label>
+                                <div class="col-md-9">
+                                    <input asp-for="Holiday.HolidayDate" type="date" class="form-control" id="inputName" value="" placeholder="Holiday's Name'">
+                                    <span asp-validation-for="Holiday.HolidayDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-md-3 form-label">Description</label>
+                                <div class="col-md-9">
+                                    <input asp-for="Holiday.Description" class="form-control" id="inputName" placeholder="Holiday's Description">
+                                    <span asp-validation-for="Holiday.Description" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group mb-0 mt-4 row justify-content-end">
+                                <div class="col-md-9">
+                                    <button id="submitButtonHoliday" class="btn btn-primary" type="button">Save</button>
+                                    <button id="ResetButton" class="btn btn-secondary" type="reset">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+
+
+    <div class="partial-list">
+        @await Html.PartialAsync("~/Views/Holiday/_Holidaylist.cshtml", Model);
+    </div>
+
+
+
+    <!-- Employee Modal used for deletion -->
+    <div class="modal fade" id="holidaymodal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <h1>Delete</h1>
+                        <p>Are you sure you want to delete ?</p>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button class="btn btn-primary deletebtn delete-item">Delete</button>
+                    <button class="btn btn-outline-primary cancelbtn" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Holiday Modal used for edit -->
+
+    <div class="modal fade holiday-modal" id="holiday-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="holiday-content">
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/jquery.min.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+
+    //jQuery submit form when Enter key is pressed
+
+    $("#formIdCreateHoliday").keypress(function (event) {
+        if (event.which == '13' && !event.shiftKey) {
+            $("#submitButtonHoliday").click();
+            event.preventDefault();
+            //return false;
+        }
+    });
+
+
+    //For Create
+    // function will get executed
+    // on click of submit button
+    $("#submitButtonHoliday").click(function (ev) {
+        var form = $("#formIdCreateHoliday").serialize();
+        //var url = form.attr('/Designation/Edit');
+
+        var validator = $("#formIdCreateHoliday").validate();
+        if (validator.form() == "") {
+            //If the "Please Select" option is selected display error.
+
+            $.toast({
+                heading: 'Error',
+                text: 'Create Failed Please fill out the Required Details',
+                icon: 'error',
+                position: 'top-right'
+            })
+
+            return false;
+        }
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Holiday/Create",
+            data: form,
+            success: function (data) {
+                debugger
+                if (data == true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Holiday Create Success',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+
+                    $.ajax({
+                        type: "GET",
+                        dataType: "html",
+                        url: "Holiday/HolidayList",
+                        success: function (data) {
+                            debugger
+                            $('.partial-list').empty();
+                            $('.partial-list').append(data)
+                        }
+                    })
+                    $("#ResetButton").click();
+                    //reload page after create and Toast message nice na haha
+
+                    //setTimeout(function () {
+                    //    /*alert('Reloading Page');*/
+                    //    location.reload(true);
+                    //}, 3000);
+
+                }
+
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Create Failed Please fill out the Required Details',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+
+                }
+
+            },
+
+
+            error: function (data) {
+
+
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Holiday Create Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+        });
+
+        //reload page after create and Toast message nice na haha
+
+        //setTimeout(function () {
+        //    /*alert('Reloading Page');*/
+        //    location.reload(true);
+        //}, 3000);
+
+    });
+
+    $(document).ready(function () {
+        $(".btnUpdate").on('click', function () {
+            var id = $(this).data("id");
+            $.ajax({
+                type: "Get",
+                url: "/Holiday/Edit",
+                data: { "id": id },
+                success: function (response) {
+                    debugger
+                    $('#holiday-content').html(response);
+                }
+            })
+        });
+
+
+        $(".deletebtn").click(function () {
+            debugger
+            let id = this.id;
+            $.ajax({
+                type: "POST",
+                url: "/Holiday/Delete",
+                data: { Holiday_Id: id },
+
+                success: function (result) {
+                    debugger
+                    $('#holidaymodal').modal('toggle');
+
+                    if (result == true) {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Holiday delete Success',
+                            icon: 'success',
+                            position: 'top-right'
+                        })
+
+                        $.ajax({
+                            type: "GET",
+                            dataType: "html",
+                            url: "Holiday/HolidayList",
+                            success: function (data) {
+                                debugger
+                                $('.partial-list').empty();
+                                $('.partial-list').append(data)
+                            }
+                        })
+                    }
+                    else {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Holiday delete Failed',
+                            icon: 'error',
+                            position: 'top-right'
+
+                        })
+                    }
+                },
+                error: function (response) {
+                    debugger
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Holiday delete Failed',
+                        icon: 'error',
+                        position: 'top-right'
+
+                    })
+
+                }
+
+            });
+        });
+    })
+
+
+
+    //$(".cancelbtn").click(function () {
+    //    $('#myModal').hide();
+    //});
+
+
+
+
+</script>
+
+

@@ -1,0 +1,226 @@
+﻿@model HRMS_Silicon.ViewModel.EmployeeViewModel
+
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+
+<h3>Detail</h3>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-lg-12">
+        <div class="card user-pro-list overflow-hidden">
+            <div class="card-body">
+                <div class="text-center">
+                    <div class="widget-user-image mx-auto text-center">
+                        <img class="avatar avatar-xxl brround" alt="img" src="~/Images/@Model.Image" width="60" height="60" asp-append-version="true">
+                    </div>
+                    <div class="pro-user mt-3">
+                        <h5 class="pro-user-username text-dark mb-1 fs-16">
+                            @Html.DisplayFor(model => model.FullName)
+
+                        </h5>
+                        <h6 class="pro-user-desc text-muted fs-12">
+                            @Html.DisplayFor(model => model.DesignationViewModel.Designation_name)
+                        </h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="mb-2 mt-4 font-weight-semibold">Basic Details</h5>
+                        <hr />
+                        <div class="table-responsive">
+                            <table class="table text-nowrap">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Employee Number</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.EmployeeNumber)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Email ID</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Email)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Contact No</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Contact_1)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Contact No.2</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Contact_2)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Gender</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.GenderEnum)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Date Of Birth</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Dob)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Address</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Address)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Marital Status</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>@Html.DisplayFor(model => model.Marital_status)</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="mb-2 mt-4 font-weight-semibold">Company  Details</h5>
+                        <hr />
+                        <div class="table-responsive">
+                            <table class="table text-nowrap  mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Department</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.DepartmentViewModel.Department_name)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Designation</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.DesignationViewModel.Designation_name)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Joining Date</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Joining_date)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Status</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            @{ if (Model.Is_Active == true)
+                                                {
+
+                                    <label class="badge badge-light">Enabled</label> }
+                                else
+                                {
+                    <label class="badge badge-danger">Disabled</label> } }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Description</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td style=" word-wrap: break-word; word-break: break-all; white-space: normal;"> @Html.DisplayFor(model => model.Description)</td>
+                                    </tr>
+                                </tbody>
+                            </table>    
+                        </div>
+
+                    </div>
+                </div>
+
+                <a asp-action="Index" class="btn btn-green">Back to List</a>
+
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+<!-- End Row-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,246 @@
+﻿@model HRMS_Silicon.ViewModel.LeaveViewModel
+
+@{ ViewData["Title"] = "Edit"; }
+
+<h4>Edit</h4>
+
+<!--Page header-->
+<div class="page-header d-xl-flex d-block">
+    <div class="page-leftheader">
+        <h5 class="page-title">Apply Leaves</h5>
+    </div>
+</div>
+<!--End Page header-->
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-8 col-md-12 col-lg-12">
+        <form id="formIdEditLeave" asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Leave_id" />
+            <div class="card">
+                <div class="card-header  border-0">
+                    <h4 class="card-title">Apply Leaves</h4>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="card-body">
+                    <div class="leave-types">
+                        <div class="form-group">
+                            <label class="form-label">Employee Name</label>
+
+                            @Html.DropDownListFor(x => x.Employee_id, (SelectList)ViewBag.Employee, "Select Employee", new { @class = "form-control custom-select select2" })
+                            <span asp-validation-for="Employee_id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Type of Leave</label>
+                            @Html.DropDownList("LeaveTypeEnum", Html.GetEnumSelectList<HRMS_Silicon.Enum.LeaveTypeEnum>(), "Select Leave", new { @class = "form-control custom-select select2" })
+                            <span asp-validation-for="LeaveTypeEnum" class="text-danger"></span>
+
+                        </div>
+                        @*<div class="leave-content active">
+                                <div class="form-group">
+                                    <label class="form-label">Leave Date From:</label>
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(a => a.Date_from, new { @class = "form-control fc-datepicker", @type = "date", @name = "Leave From Date", @id = "id" })
+                                        <span asp-validation-for="Date_from" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="leave-content active">
+                            <div class="form-group">
+                                <label class="form-label">Leave Date From:</label>
+                                <div class="input-group">
+                                    <input asp-for="Date_from" class="form-control" />
+                                    <span asp-validation-for="Date_from" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="leave-content active">
+                                <div class="form-group">
+                                    <label class="form-label">Leave Date To:</label>
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(a => a.Date_to, new { @class = "form-control fc-datepicker", @type = "date", @name = "Leave Upto Date", @id = "id" })
+                                        <span asp-validation-for="Date_to" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="leave-content active">
+                            <div class="form-group">
+                                <label class="form-label">Leave Date To:</label>
+                                <div class="input-group">
+                                    <input asp-for="Date_to" class="form-control" />
+                                    <span asp-validation-for="Date_to" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Reason:</label>
+                            <input asp-for="Leave_reason" class="form-control" />
+
+                            <span asp-validation-for="Leave_reason" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="d-flex">
+                        @*<div>
+                                <label class="mb-0 font-weight-semibold text-dark">Selected Days:</label>
+                                <span class="badge badge-danger badge-pill ml-2">
+                                    222
+                                </span>
+                            </div>*@
+                        <div class="ml-auto">
+                            @*<a href="#" class="btn btn-outline-primary" data-dismiss="modal">Close</a>*@
+                            @*<a asp-action="Index" class="btn btn-outline-primary">Close</a>*@
+                            <a asp-action="Index" class="btn btn-danger">Close</a>
+                            <input id="EditButtonLeave" type="button" value="Update" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    @*<div class="col-xl-4 col-lg-12 col-md-12">
+            <div class="card">
+                <div class="p-0">
+                    <div class="card-header border-0">
+                        <h4 class="card-title">Calendar</h4>
+                    </div>
+                    <div class="leave-calendar mt-3"></div>
+                </div>
+            </div>
+        </div>*@
+    <div class="col-xl-4 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header  border-0">
+                <h4 class="card-title">Leaves Overview</h4>
+            </div>
+            <div class="card-body">
+                <div id="leavesoverview" class="mx-auto pt-2"></div>
+                <div class="row pt-4 mx-auto text-center">
+                    <div class="col-lg-9 col-md-12 mx-auto d-block">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label bg-primary mr-2 my-auto"></span>Casual Leaves
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3 mt-md-0">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label badge-danger mr-2 my-auto"></span>Sick Leaves
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label bg-secondary mr-2 my-auto"></span>Study Leaves
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label bg-success mr-2 my-auto"></span>Remaining Leaves
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+<div>
+    <a asp-action="Index" lass="btn btn-danger">Back to List</a>
+</div>
+
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/jquery.min.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+
+
+    $("#EditButtonLeave").click(function (ev) {
+        debugger
+
+        var form = $("#formIdEditLeave").serialize();
+        //$("#formIdCreateEmployee").validate();
+        //$("#commentForm").validate();
+
+        var validator = $("#formIdEditLeave").validate();
+        validator.form();
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Leave/Edit",
+            data: form,
+            success: function (data) {
+                debugger
+
+                if (data == true) {
+
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Leave edit Success',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+
+
+
+                    setTimeout(function () {
+                        /*alert('Reloading Page');*/
+                        //location.reload(true);
+                        window.location.href = "/Leave"
+                    }, 3000);
+                }
+
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Leave Edit Failed Please fill out the Required Details',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+
+                    //$("#formIdCreateEmployee").validate();
+
+
+                }
+
+
+            },
+
+
+            error: function (data) {
+
+
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Leave Create Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+        });
+
+        //reload page after create and Toast message nice na haha
+
+        //setTimeout(function () {
+        //    /*alert('Reloading Page');*/
+        //    location.reload(true);
+        //}, 3000);
+
+    });
+
+
+
+
+</script>

@@ -1,0 +1,492 @@
+﻿@model HRMS_Silicon.ViewModel.EmployeeViewModel
+
+@{ ViewData["Title"] = "Edit"; }
+
+<h3>Edit</h3>
+
+<hr />
+
+
+<div class="col-xl-12 col-md-12 col-lg-12">
+    <!--<div class="tab-menu-heading hremp-tabs p-0 ">
+        <div class="tabs-menu1">-->
+    <!-- Tabs -->
+    <!--<ul class="nav panel-tabs">
+                <li class="ml-4"><a href="#tab5" class="active" data-toggle="tab">Personal Details</a></li>
+                <li><a href="#tab6" data-toggle="tab">Company Details</a></li>
+            </ul>
+        </div>
+    </div>-->
+    <div class="panel-body tabs-menu-body hremp-tabs1 p-0">
+        <div class="panel-body">
+            <form id="formIdEditEmployee" asp-action="Edit" method="post"enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="@Model.Employee_Id" />
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab5">
+                        <div class="card-body">
+                            <h4 class="mb-4 font-weight-bold">Basic</h4>
+                            <div class="form-group ">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Employee Number</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" asp-for="EmployeeNumber" readonly placeholder="Employee Number">
+                                    </div>
+                                    <span asp-validation-for="EmployeeNumber" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Full Name</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control mb-md-0 mb-5" asp-for="First_name" placeholder="First Name">
+                                                <span class="text-muted"></span>
+                                            </div>
+                                            <span asp-validation-for="First_name" class="text-danger"></span>
+
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control" asp-for="Last_Name" placeholder="Last Name">
+                                            </div>
+                                            <span asp-validation-for="Last_Name" class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="form-group ">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label mb-0 mt-2">User Name</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" asp-for="ApplicationUser" placeholder="UserName">
+                </div>
+                <span asp-validation-for="ApplicationUser" class="text-danger"></span>
+
+            </div>
+        </div>*@
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2"> Contact Number 01</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" asp-for="Contact_1" placeholder="Contact Number01">
+                                    </div>
+                                    <span asp-validation-for="Contact_1" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2"> Contact Number 02</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" asp-for="Contact_2" placeholder="Contact Number02">
+                                    </div>
+                                    <span asp-validation-for="Contact_2" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            @*<div class="form-group ">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label mb-0 mt-2">Date Of Birth</label>
+                </div>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(a => a.Dob, new { @class = "form-control fc-datepicker", @type = "date", @name = "Dob", @id = "id" })
+                </div>
+                <span asp-validation-for="Dob" class="text-danger"></span>
+
+            </div>
+        </div>*@
+                            <div class="form-group ">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Date Of Birth</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input asp-for="Dob" class="form-control" type="date" />
+                                    </div>
+                                    <span asp-validation-for="Dob" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+
+
+
+                            @*<div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Marital Status</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("MaritalStatusEnum", Html.GetEnumSelectList<HRMS_Silicon.Enum.MaritalStatusEnum>(), "Select Marital Status", new { @class = "form-control" })
+                                    </div>
+                                    <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+
+                                </div>
+                            </div>*@
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Marital Status</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("Marital_status", Html.GetEnumSelectList<HRMS_Silicon.Enum.MaritalStatusEnum>(), "Select Marital Status", new { @class = "form-control" })
+                                       
+                                    </div>
+                                    <span asp-validation-for="Marital_status" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Gender</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("GenderEnum", Html.GetEnumSelectList<HRMS_Silicon.Enum.GenderEnum>(), "Select Gender", new { @class = "form-control" })
+
+                                    </div>
+                                    <span asp-validation-for="GenderEnum" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Email</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        
+                                        <input type="text" class="form-control" asp-for="Email" placeholder="email">
+                                       
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2"> Address</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea rows="3" class="form-control" asp-for="Address" placeholder="Address"></textarea>
+                                    </div>
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    @*<div class="tab-pane" id="tab6">*@
+                    <div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Department</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.DropDownListFor(x => x.Department_Id, (SelectList)ViewBag.EmpDepartment, "Select Department", new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Designation</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.DropDownListFor(x => x.Designation_Id, (SelectList)ViewBag.EmpDesignation, "Select Designation", new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label mb-0 mt-2">Date Of Joining</label>
+                </div>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(a => a.JoiningDate, new { @class = "form-control fc-datepicker", @type = "date", @name = "JoiningDate", @id = "id" })
+
+
+                </div>
+                <span asp-validation-for="JoiningDate" class="text-danger"></span>
+
+            </div>
+        </div>*@
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Date Of Joining</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        @*<label asp-for="JoiningDate"></label>*@
+                                        @*<input asp-for="JoiningDate" type="date" class="form-control" />*@
+                                        <input asp-for="Joining_date" class="form-control" type="date" />
+
+                                    </div>
+                                    <span asp-validation-for="Joining_date" class="text-danger"></span>
+
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-0 mt-2">Description</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea rows="3" class="form-control" asp-for="Description" placeholder="Description"></textarea>
+                                    </div>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-label mb-0 mt-2">Upload Photo</div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group file-browser">
+                                            <input type="text" class="form-control border-right-0 browse-file" placeholder="choose" readonly>
+                                            <label class="input-group-append mb-0">
+                                                <span class="btn ripple btn-primary">
+                                                    Browse
+
+                                                    @*<input type="file" id="file" style="display:none;" />
+                                                    <button id="button" name="button" value="Upload" onclick="thisFileUpload();">Upload</button>*@
+                                                    
+                                                    <input type="file" class="file-browserinput" asp-for="File" style="display: none;" value="Choose Image" id="file">
+                                                    @*@Html.DisplayFor(model=>Model.Image)*@
+                                                    <input type="hidden" class="form-control" asp-for="Image" placeholder="email">
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Image" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-2" id="previewImg">
+                                <img id="image" class="image-preview" src="#" alt="Image Preview" />
+                            </div>
+
+                            @*<div class="form-group mt-7">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label">Status:</label>
+                </div>
+                <div class="col-md-9">
+                    <label class="custom-switch">
+                        <input type="checkbox" name="custom-switch-checkbox" asp-for="Is_Active" class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        <span class="custom-switch-description">Active/Inactive</span>
+                    </label>
+                </div>
+            </div>
+        </div>*@
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-right">
+                        @*<input id="EditButtonEmployee" type="button" value="Save" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-danger">Cancel</a>*@
+
+
+
+                        <button id="EditButtonEmployee" type="button" class="btn btn-primary" value="Save">Update </button>
+                        @*<button asp-action="Index" class="btn btn-danger">Cancel</button>*@
+                        <button class="btn btn-danger" type="reset">Cancel</button>
+                        <a asp-action="Index" class="btn btn-green">Back to List</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+
+    <style>
+        .image-preview {
+            position: initial;
+            height: 171px;
+            width: 173px;
+            border-radius: 20px;
+        }
+    </style>
+
+
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // function thisFileUpload() {
+        //    document.getElementById("file").click();
+        //};
+
+        $("#file").change(function () {
+            readURL(this);
+        });
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+
+        }
+
+
+        //jQuery submit form when Enter key is pressed
+
+        $("#formIdEditEmployee").keypress(function (event) {
+            if (event.which == '13' && !event.shiftKey) {
+                $("#EditButtonEmployee").click();
+                event.preventDefault();
+                //return false;
+            }
+        });
+
+
+
+        $("#EditButtonEmployee").click(function (ev) {
+            debugger
+
+            //var form = $("#formIdEditEmployee").serialize();
+
+            var formdata = new FormData(document.getElementById("formIdEditEmployee"));
+
+            var files = document.getElementById('file').files;// $('#file').files[0];// e.target.files;
+
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    for (var x = 0; x < files.length; x++) {
+                        formdata.append("file" + x, files[x]);
+                        //data.append(base64String, base64String);
+                    }
+                } else {
+                    alert("Upgrade your browser!");
+                }
+            }
+            //$("#formIdCreateEmployee").validate();
+            //$("#commentForm").validate();
+
+            var validator = $("#formIdEditEmployee").validate();
+            if (validator.form() == "") {
+                //If the "Please Select" option is selected display error.
+
+                $.toast({
+                    heading: 'Error',
+                    text: 'Create Failed Please fill out the Required Details',
+                    icon: 'error',
+                    position: 'top-right'
+                })
+
+                return false;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Employee/Edit",
+                data: formdata,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    debugger
+
+                    if (data == true) {
+
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Employee edit Success',
+                            icon: 'success',
+                            position: 'top-right'
+                        })
+
+
+
+                        setTimeout(function () {
+                            /*alert('Reloading Page');*/
+                            //location.reload(true);
+                            window.location.href = "/Employee"
+                        }, 3000);
+                    }
+
+                    else {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Employee Edit Failed Please fill out the Required Details',
+                            icon: 'error',
+                            position: 'top-right'
+                        })
+
+                        //$("#formIdCreateEmployee").validate();
+
+
+                    }
+
+
+                },
+
+
+                error: function (data) {
+
+
+                    debugger
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Employee Create Failed',
+                        icon: 'error',
+                        position: 'top-right'
+
+                    })
+
+                }
+            });
+
+            //reload page after create and Toast message nice na haha
+
+            //setTimeout(function () {
+            //    /*alert('Reloading Page');*/
+            //    location.reload(true);
+            //}, 3000);
+
+        });
+
+    </script>

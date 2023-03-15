@@ -1,0 +1,414 @@
+﻿@model HRMS_Silicon.ViewModel.LeaveViewModelDetails
+
+@{
+    ViewData["Title"] = "Index";
+
+
+}
+<style>
+    .header-search {
+        min-width: 15rem !important;
+    }
+</style>
+
+<div class="Alert"></div>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header  border-0">
+                <h4 class="card-title">Search </h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Index" method="get">
+                    <div class="row">
+                        <div class="col-md-12 col-xl-7">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">From:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="feather feather-calendar"></i>
+                                                </div>
+                                            </div>
+
+                                            <input asp-for="LeaveFilter.Date_fromForSearch" class="form-control fc-datepicker" name="Date_fromForSearch" placeholder="Search By Leave From" type="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">To:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="feather feather-calendar"></i>
+                                                </div>
+                                            </div>
+                                            <input asp-for="LeaveFilter.Date_toForSearch" class="form-control fc-datepicker" name="Date_toForSearch" placeholder="Search By Leave To" type="date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xl-3">
+                            <div class="form-group">
+                                <label class="form-label">Employee Name:</label>
+                                <input asp-for="LeaveFilter.EmployeeNameForSearch" type="search" class="form-control header-search" name="EmployeeNameForSearch" placeholder="Search By Name" aria-label="Search" tabindex="1">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xl-2">
+                            <div class="form-group mt-5">
+                                <button class="btn btn-primary btn-block" type="submit">
+                                    <i class="feather feather-search">Search</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header  border-0">
+                <h4 class="card-title">Leaves Summary</h4>
+            </div>
+            <div class="page-rightheader ml-md-auto">
+                <div class="align-items-end flex-wrap my-auto right-content breadcrumb-right">
+                    <div class="btn-list">
+                        <a asp-action="Create" class="btn btn-primary mr-3">Apply leave</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="emp-attendance">
+                        <thead>
+                            <tr>
+                                <th class="border-bottom-0 text-center">S.N.</th>
+                                <th class="border-bottom-0">Employee Name</th>
+                                <th class="border-bottom-0">Leave Type</th>
+                                <th class="border-bottom-0">From</th>
+                                <th class="border-bottom-0">TO</th>
+                                <th class="border-bottom-0">Days</th>
+                                <th class="border-bottom-0">Status</th>
+                                <th class="border-bottom-0">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 1; }
+                            @foreach (var item in Model.LeavePaginatedVM)
+                            {
+                                if (item.Leave_id != 0)
+                                {
+                                    <tr data-id="@item.Leave_id">
+                                        <td class="text-center">@(i++)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.EmployeeViewModel.FullName)</td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LeaveTypeEnum)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Date_from)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Date_to)
+                                        </td>
+                                        <td class="font-weight-semibold">
+                                            @Html.DisplayFor(modelItem => item.TotalDays)
+                                        </td>
+
+                                        <td class="status-btns">
+                                            @if (item.LeaveApproval == HRMS_Silicon.Enum.LeaveStatus.Rejected)
+                                            {
+                                                @*<label class="badge badge-danger">Rejected</label>*@
+
+                                                <a class="badge badge-danger text-white btn-reject">Rejected</a>
+                                            }
+                                            else if (item.LeaveApproval == HRMS_Silicon.Enum.LeaveStatus.Approved)
+                                            {
+                                                @*<label class="badge badge-success ">Approved</label>*@
+
+                                                <a class="badge badge-success btn-approve">Approved</a>
+                                            }
+                                            else if (item.LeaveApproval == HRMS_Silicon.Enum.LeaveStatus.Pending)
+                                            {
+                                                @*<label class="badge badge-info" id="@item.Leave_id">Pending</label>*@
+                                                <a class="badge badge-info btn-pending">Pending</a>
+                                            }
+                                        </td>
+
+
+                                        <td class="text-left d-flex action-btns">
+                                            
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <a class="action-btns1" asp-action="Edit" asp-route-id="@item.Leave_id">
+                                                    <i class="feather feather-edit  text-primary"></i>
+                                                </a>
+                                            }
+                                                <a class="action-btns1" asp-action="Detail" asp-route-id="@item.Leave_id">
+                                                    <i class="feather feather-info  text-primary"></i>
+                                                </a>
+
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    if (item.LeaveApproval == HRMS_Silicon.Enum.LeaveStatus.Rejected)
+                                                    {
+                                                        <a onClick="ChangeStatus(this)" class="badge badge-success btn-sts btn-approve" id="@item.Leave_id">Approve</a>
+                                                    }
+                                                    else if (item.LeaveApproval == HRMS_Silicon.Enum.LeaveStatus.Approved)
+                                                    {
+                                                        <a onClick="ChangeStatus(this)" class="badge badge-danger btn-sts text-white btn-reject" id="@item.Leave_id">Reject</a>
+                                                    }
+                                                    else if (item.LeaveApproval == HRMS_Silicon.Enum.LeaveStatus.Pending)
+                                                    {
+                                                        <a onClick="ChangeStatus(this)" class="badge badge-success btn-sts btn-approve" id="@item.Leave_id">Approve</a>
+                                                        <a onClick="ChangeStatus(this)" class="badge badge-danger btn-sts text-white btn-reject" id="@item.Leave_id">Reject</a>
+                                                    }
+                                                }
+
+                                            </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-7">
+
+                        <div class="dataTables_paginate paging_simple_numbers" id="hr-holiday_paginate">
+
+                            <ul class="pagination">
+                                @if (Model.LeavePaginatedVM.PageIndex > 1)
+                                {
+                                    <li class="paginate_button page-item previous" id="hr-holiday_previous">
+                                        <a asp-action="Index"
+                                           asp-route-pageNumber="@(Model.LeavePaginatedVM.PageIndex - 1)"
+                                           asp-route-Date_fromForSearch="@(Model.LeaveFilter.Date_fromForSearch)"
+                                           asp-route-Date_toForSearch="@(Model.LeaveFilter.Date_toForSearch)"
+                                           aria-controls="hr-holiday" data-dt-idx="0" tabindex="0" class="page-link">
+                                            Previous
+                                        </a>
+                                    </li>
+                                }
+                                @if (Model.LeavePaginatedVM.PageIndex < Model.LeavePaginatedVM.TotalPages)
+                                {
+                                    <li class="paginate_button page-item next " id="hr-holiday_next">
+                                        <a asp-action="Index"
+                                           } asp-route-pageNumber="@(Model.LeavePaginatedVM.PageIndex + 1)"
+                                           asp-route-Date_fromForSearch="@(Model.LeaveFilter.Date_fromForSearch)"
+                                           asp-route-Date_toForSearch="@(Model.LeaveFilter.Date_toForSearch)"
+                                           aria-controls="hr-holiday" data-dt-idx="3" tabindex="0" class="page-link">
+                                            Next
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+<!-- Holiday Modal used for deletion -->
+<div class="modal fade" id="holidaymodal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h1>Delete</h1>
+                    <p>Are you sure you want to delete ?</p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary deletebtn delete-item">Delete</button>
+                <button class="btn btn-outline-primary cancelbtn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/jquery.min.js"></script>
+
+<script>
+    $(".deletebtn").click(function () {
+        debugger
+        let id = this.id;
+        $.ajax({
+            type: "POST",
+            url: "/Leave/Delete",
+            data: { id: id },
+
+            success: function (response) {
+                debugger
+                var result = '';
+                if (response.message == "Success") {
+                    /* result = 'Success'*/
+                    $.notify("Deletion Successfull", "success");
+                }
+                else {
+                    /*result = 'failed'*/
+                    $.notify("Deletion Failed", "error");
+                }
+
+                //var html = `<div class="alert alert-danger fade in" role="alert">
+                //                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                //                               <span aria-hidden="true">&times;</span>
+                //                        </button>
+                //                        <i class="mdi mdi-block-helper"></i>
+                //                         <strong>`+ result + `</strong>
+                //                     </div>
+                //                     <br />`;
+                //$(".Alert").prepend(html);
+
+                $('tr[data-id="' + response.id + '"]').remove();
+                $('#holidaymodal').modal('toggle');
+            }
+        });
+    });
+
+    //$(".btn-sts").on('click',ChangeStatus);
+
+    function ChangeStatus(element) {
+        debugger
+        let id = element.id;
+        let status = element.innerHTML;
+        console.log(id);
+        console.log(status);
+        $.ajax({
+            type: "POST",
+            url: "/Leave/ChangeLeaveStatus",
+            data: {
+                id: id,
+                status: status
+            },
+            success: function (response) {
+                debugger
+                if (response[0] == 'Approve') {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Leave Approve Success',
+                        icon: 'success',
+                        position: 'top-right'
+
+                    })
+
+                    $("tr[data-id='" + response[1] + "']").children('.action-btns').children('.btn-approve').remove();
+
+                    $("tr[data-id='" + response[1] + "']").children('.action-btns')
+                        .append('<a onClick="ChangeStatus(this)" class="badge badge-danger btn-sts text-white btn-reject" id="' + response[1] + '">Reject</a>');
+
+                    //below two line of code  are done for Pending
+                    $("tr[data-id='" + response[1] + "']").children('.action-btns').children('.btn-reject').remove();
+
+                    $("tr[data-id='" + response[1] + "']").children('.action-btns')
+                        .append('<a onClick="ChangeStatus(this)" class="badge badge-danger btn-sts text-white btn-reject" id="' + response[1] + '">Reject</a>');
+
+
+
+                    //below will be done for status
+
+                    $("tr[data-id='" + response[1] + "']").children('.status-btns').children('.btn-reject').remove();
+
+                    $("tr[data-id='" + response[1] + "']").children('.status-btns')
+                        .append('<a class="badge badge-success btn-approve">Approved</a>');
+
+                    $("tr[data-id='" + response[1] + "']").children('.status-btns').children('.btn-pending').remove();
+
+
+
+                }
+                else if (response[0] == 'Reject') {
+                    $.toast({
+                        heading: 'Reject',
+                        text: 'Leave Reject Success',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+
+                    $("tr[data-id='" + response[1] + "']").children('.action-btns').children('.btn-reject').remove();
+
+                    $("tr[data-id='" + response[1] + "']").children('.action-btns')
+                        .append(' <a onClick="ChangeStatus(this)" class="badge badge-success btn-sts btn-approve" id="' + response[1] + '">Approve</a>');
+
+
+                    //below two line of code  are done for Pending
+                    $("tr[data-id='" + response[1] + "']").children('.action-btns').children('.btn-approve').remove();
+
+
+                    $("tr[data-id='" + response[1] + "']").children('.action-btns')
+                        .append(' <a onClick="ChangeStatus(this)" class="badge badge-success btn-sts btn-approve" id="' + response[1] + '">Approve</a>');
+
+
+                    //below two line of code  are done for status change
+
+                    $("tr[data-id='" + response[1] + "']").children('.status-btns').children('.btn-approve').remove();
+
+                    $("tr[data-id='" + response[1] + "']").children('.status-btns')
+                        .append('<a class="badge badge-danger text-white btn-reject">Rejected</a>');
+
+                    $("tr[data-id='" + response[1] + "']").children('.status-btns').children('.btn-pending').remove();
+
+
+
+                }
+                else if (response[0] == 'Pending') {
+                    $.toast({
+                        heading: 'Pending',
+                        text: 'Leave is in Pending State',
+                        icon: 'info',
+                        position: 'top-right'
+                    })
+                    //$("tr[data-id='" + response[1] + "']").children('.action-btns').children('.btn-approve').remove();
+                    //$("tr[data-id='" + response[1] + "']").children('.action-btns').children('.btn-reject').remove();
+
+                    //$("tr[data-id='" + response[1] + "']").children('.action-btns')
+                    //    .append(' <a onClick="ChangeStatus(this)" class="badge badge-success btn-sts btn-approve" id="' + response[1] + '">Approve</a>');
+
+
+                    //$("tr[data-id='" + response[1] + "']").children('.action-btns')
+                    //    .append('<a onClick="ChangeStatus(this)" class="badge badge-danger btn-sts text-white btn-reject" id="' + response[1] + '">Reject</a>');
+
+
+                }
+                //else {
+                //    $.toast({
+                //        heading: 'Failed',
+                //        text: 'Error Occured During Process',
+                //        icon: 'error',
+                //        position: 'top-right',
+                //        stack: false
+                //    })
+                //}
+
+            }
+        });
+    }
+
+
+</script>

@@ -1,0 +1,175 @@
+﻿@model HRMS_Silicon.ViewModel.DepartmentViewModel
+@*@{ var a = Model; }*@
+
+@{ ViewData["Title"] = "Edit"; }
+
+@*<link href="~/lib/JqueryToast/jquery.toast.css" rel="stylesheet" />*@
+<hr />
+<div class="container" style="max-width:785px;">
+
+    <div class="row">
+        <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header border-bottom-0">
+                    <h4 class="card-title">Update Department</h4>
+                </div>
+                <div class="card-body">
+                    <form id="formIdDepartment" class="form-horizontal" asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Department_id" />
+                        <div class="form-group row">
+                            <label for="inputName" class="col-md-3 form-label">Department Name</label>
+                            <div class="col-md-9">
+                                <input type="text" asp-for="Department_name" class="form-control" id="inputName" placeholder="Name" required>
+                                <span asp-validation-for="Department_name" class="text-danger"></span>
+
+                            </div>
+
+                            @*<div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="is_active" /> @Html.DisplayNameFor(model => model.is_active)
+                                    </label>
+                                </div>*@
+
+
+                        </div>
+
+
+                        <div class="form-group mb-0 mt-4 row justify-content-end">
+                            <div class="col-md-9">
+                                <button id="editButtonDepartment" class="btn btn-primary" type="button" value="Update">Update</button>
+                                <a class="btn btn-secondary btn-cancel" data-toggle="modal" data-target=".department-modal">Cancel</a>
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+
+@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+
+
+@*<script src="~/lib/JqueryToast/jquery.toast.js"></script>*@
+<script>
+    // function will get executed
+    // on click of submit button
+    $("#editButtonDepartment").click(function (ev) {
+        debugger
+        var form = $("#formIdDepartment").serialize();
+        //var url = form.attr('/Designation/Edit');
+
+
+
+        var validator = $("#formIdDepartment").validate();
+        if (validator.form() == "") {
+            //If the "Please Select" option is selected display error.
+
+            $.toast({
+                heading: 'Error',
+                text: 'Create Failed Please fill out the Required Details',
+                icon: 'error',
+                position: 'top-right'
+            })
+
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/Department/Edit",
+            data: form,
+            success: function (data) {
+                debugger
+
+                $('.department-modal').modal('toggle');
+
+                $.toast({
+                    heading: 'Success',
+                    text: 'Department Edit Success',
+                    icon: 'success',
+                    position: 'top-right'
+                })
+
+                setTimeout(function () {
+                    /*alert('Reloading Page');*/
+                    location.reload(true);
+                    //window.location.href = "Department/Index"
+                }, 3000);
+
+            },
+
+
+            error: function (data) {
+                $('.department-modal').modal('toggle');
+
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Department Edit Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+        });
+
+        //reload page after edit and Toast message nice na haha
+
+        //setTimeout(function () {
+        //    /*alert('Reloading Page');*/
+        //    location.reload(true);
+        //}, 3000);
+
+    });
+</script>
+
+@*@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}*@
+
+
+
+
+@*<h1>Edit</h1>
+
+    <h4>DepartmentModel</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="department_id" />
+                <div class="form-group">
+                    <label asp-for="department_name" class="control-label"></label>
+                    <input asp-for="department_name" class="form-control" />
+                    <span asp-validation-for="department_name" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="is_active" /> @Html.DisplayNameFor(model => model.is_active)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@

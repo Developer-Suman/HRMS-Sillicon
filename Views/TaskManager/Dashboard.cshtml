@@ -1,0 +1,182 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Task Manager Dashboard";
+}
+
+@*Add Task Button*@
+@await Html.PartialAsync("~/Views/TaskManager/_AddTask.cshtml")
+
+<section id='task-dashboard'>
+    @*top section of dashboard -> Tasks Information In Qauntitative Format*@
+    <div class="task-information ">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="row card-body ">
+                        <div class="col-8">
+                            <div class="mt-0 text-left">
+                                <span class="fs-14 font-weight-semibold text-nowrap">Completed Tasks</span>
+                                <h3 class="mb-0 mt-1 mb-2"><i class="feather feather-arrow-up-right mr-1 bg-success-transparent p-1 brround"></i>8</h3>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="icon1 bg-success my-auto  float-right"> <i class="feather feather-check"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="row card-body">
+                        <div class="col-8">
+                            <div class="mt-0 text-left">
+                                <span class="fs-14 font-weight-semibold">To-Do Tasks</span>
+                                <h3 class="mb-0 mt-1 mb-2"><i class="feather feather-arrow-up-right mr-1 bg-warning-transparent p-1 brround"></i>8</h3>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="icon1 bg-warning my-auto  float-right"> <i class="feather feather-trending-up"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="row card-body">
+                        <div class="col-8">
+                            <div class="mt-0 text-left">
+                                <span class="fs-14 font-weight-semibold">Running Tasks</span>
+                                <h3 class="mb-0 mt-1 mb-2"><i class="feather feather-arrow-up-right mr-1 bg-primary-transparent p-1 brround"></i>8</h3>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="icon1 bg-primary my-auto  float-right"> <i class="feather feather-trending-up"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="row card-body">
+                        <div class="col-8">
+                            <div class="mt-0 text-left">
+                                <span class="fs-14 font-weight-semibold">Overdue Tasks</span>
+                                <h3 class="mb-0 mt-1 mb-2"><i class="feather feather-arrow-down-right mr-1 bg-danger-transparent p-1 brround"></i>8</h3>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="icon1 bg-danger my-auto  float-right"> <i class="feather feather-trending-down"></i> </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+              <div class="col-md-3">
+                <div class="card">
+                    <div class="row card-body ">
+                        <div class="col-8">
+                            <div class="mt-0 text-left">
+                                <span class="fs-14 font-weight-semibold">Total Tasks</span>
+                                <h3 class="mb-0 mt-1 mb-2"><i class="feather feather-arrow-up-right mr-1 bg-info-transparent p-1 brround"></i>8</h3>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="icon1 bg-info my-auto  float-right"> <i class="feather feather-menu"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                  
+</section>
+  
+
+@*Tasks Information in Graphical Format*@
+<section id="tasks-chart">
+    <div class="card">
+        <div class="card-body">
+            <canvas id="taskCharts"></canvas>
+        </div>
+    </div>
+</section>
+
+@*ChartJs CDN*@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    const labels = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wensday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Completed Tasks',
+                backgroundColor: '#0dcd94',
+                data: [15, 20, 1, 8, 8, 12, 8],
+            },{
+                label: 'ToDo Tasks',
+                backgroundColor: '#fbc518',
+                data: [5, 2, 1, 6, 5, 2, 18],
+            }, {
+                label: 'Running Tasks',
+                backgroundColor: '#36f',
+                data: [25, 12, 4, 4, 2, 8, 9],
+            }, {
+                label: 'Overdue Tasks',
+                backgroundColor: '#f7284a',
+                data: [10, 10, 0, 2, 6, 3, 4],
+            }, {
+                label: 'Total Tasks',
+                backgroundColor: '#128af9',
+                data: [50, 42, 5, 14, 16, 23, 21],
+            },
+
+        ]
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            indexAxis: 'x',
+            elements: {},
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    font: {
+                        size: 18
+                    },
+                    text: 'Tasks Summary of This Week'
+                }
+            }
+        },
+
+    };
+
+    const myChart = new Chart(
+        document.getElementById('taskCharts'),
+        config
+    );
+</script>

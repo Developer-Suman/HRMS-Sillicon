@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "Update Tasks";
+}
+
+<link href="~/css/TaskManager/taskProgress.css" rel="stylesheet" />
+
+<section id="update-tasks">
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="text-center">Update Tasks</h4>
+
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <th>ToDo</th>
+                        <th>Running</th>
+                        <th>Completed</th>
+                        <th>Overdue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < 4; i++)
+                    {
+                        <tr>
+                            <td>
+                                <div class="task-content todo">
+
+                                    <div class="task-detail d-flex flex-column align-items-start">
+                                        <div class="task-detail__info">Upload Project to Git</div>
+                                        <div class="priority high">High</div>
+                                    </div>
+                                    <button class="btn-custom"><i class="feather feather-arrow-right bg-primary p-2 brround"></i></button>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="task-content running">
+
+                                    <div class="task-detail d-flex flex-column align-items-start">
+                                        <div class="task-detail__info">Upgrade the design of HRMS</div>
+                                        <div class="priority medium">Medium</div>
+                                    </div>
+                                    <button class="btn-custom"><i class="feather feather-check bg-success  p-2 brround"></i></button>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="task-content completed">
+
+                                    <div class="task-detail d-flex flex-column align-items-start">
+                                        <div class="task-detail__info">Upload Project to Git</div>
+                                        <div class="priority low">Low</div>
+                                    </div>
+                                    <button class="btn-custom"><i class="feather feather-arrow-left bg-danger  p-2 brround"></i></button>
+
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="task-content overdue">
+
+                                    <div class="task-detail d-flex flex-column align-items-start">
+                                        <div class="task-detail__info">Upload Project to Git</div>
+                                        <div class="priority medium">Medium</div>
+                                    </div>
+                                    @*<button class="btn btn-outline-primary disabled"><i class="feather feather-arrow-right"></i></button>*@
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

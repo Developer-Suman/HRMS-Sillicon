@@ -1,0 +1,129 @@
+﻿@model HRMS_Silicon.ViewModel.AttendenceViewModelDetails
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Attendence</h4>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-8 col-md-12 col-lg-12">
+        <form asp-action="Create" method="post">
+            <div class="card">
+                <div class="card-header  border-0">
+                    <h4 class="card-title">Add Attendence</h4>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="card-body">
+                    <div class="leave-types">
+                        <div class="form-group">
+                            <label class="form-label">Employee Name</label>
+
+                            @Html.DropDownListFor(x => x.AttendenceVM.Employee_id, (SelectList)ViewBag.Employee, "Select Employee", new { @class = "form-control custom-select select2" })
+                        </div>
+                 
+                        <div class="leave-content active">
+                            <div class="form-group">
+                                <label class="form-label">Current Date Time:</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(a => a.AttendenceVM.Current_Date, new { @class = "form-control fc-datepicker", @type = "datetime-local", @name = "Current Date", @id = "id" })
+                                    <span asp-validation-for="AttendenceVM.Current_Date" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="leave-content active">
+                            <div class="form-group">
+                                <label class="form-label">Arrival Date Time:</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(a => a.AttendenceVM.Turn_In, new { @class = "form-control fc-datepicker", @type = "datetime-local", @name = "Arrival Date Time", @id = "id" })
+                                    <span asp-validation-for="AttendenceVM.Turn_In" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>    
+                        <div class="leave-content active">
+                            <div class="form-group">
+                                <label class="form-label">Departure date Time:</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(a => a.AttendenceVM.Turn_Out, new { @class = "form-control fc-datepicker", @type = "datetime-local", @name = "Departure Date Time", @id = "id" })
+                                    <span asp-validation-for="AttendenceVM.Turn_Out" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                  
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="d-flex">
+                        <div class="ml-auto">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <a href="#" class="btn btn-outline-primary" data-dismiss="modal">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    @*<div class="col-xl-4 col-lg-12 col-md-12">
+            <div class="card">
+                <div class="p-0">
+                    <div class="card-header border-0">
+                        <h4 class="card-title">Calendar</h4>
+                    </div>
+                    <div class="leave-calendar mt-3"></div>
+                </div>
+            </div>
+        </div>*@
+    <div class="col-xl-4 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header  border-0">
+                <h4 class="card-title">Leaves Overview</h4>
+            </div>
+            <div class="card-body">
+                <div id="leavesoverview" class="mx-auto pt-2"></div>
+                <div class="row pt-4 mx-auto text-center">
+                    <div class="col-lg-9 col-md-12 mx-auto d-block">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label bg-primary mr-2 my-auto"></span>Casual Leaves
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3 mt-md-0">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label badge-danger mr-2 my-auto"></span>Sick Leaves
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label bg-secondary mr-2 my-auto"></span>Study Leaves
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label bg-success mr-2 my-auto"></span>Remaining Leaves
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+
+
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

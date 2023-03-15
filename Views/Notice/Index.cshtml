@@ -1,0 +1,369 @@
+﻿@model HRMS_Silicon.ViewModel.NoticeIndexViewModel
+@{
+    ViewData["Title"] = "Notice";
+}
+
+
+<body>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row" id="create-form">
+            <div class="col-md-6 col-lg-12">
+                <div class="card">
+                    <div class="Alert"></div>
+                    <div class="card-header border-bottom-0">
+                        <h4 class="card-title"
+                            >Add Notice</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="formIdCreateNotice" class="form-horizontal" asp-action="Create" asp-route-returnUrl="" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-md-3 form-label">Notice's Date</label>
+                                <div class="col-md-9">
+                                    <input asp-for="Notice.NoticeDate" type="date" value="" class="form-control" placeholder="Notice's Date">
+                                    <span asp-validation-for="Notice.NoticeDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-md-3 form-label">Subject</label>
+                                <div class="col-md-9">
+                                    <input asp-for="Notice.Subject" class="form-control" placeholder="Notice's Subject">
+                                    <span asp-validation-for="Notice.Subject" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-md-3 form-label">Description</label>
+                                <div class="col-md-9">
+                                    <textarea asp-for="Notice.Description" class="form-control" rows="5"></textarea>
+                                    <span asp-validation-for="Notice.Description" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-md-3 form-label">IsActive</label>
+                                <div class="col-md-9">
+                                    <input asp-for="Notice.isActive" type="checkbox" placeholder="IsActive">
+                                    <span asp-validation-for="Notice.isActive" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-0 mt-4 row justify-content-end">
+                                <div class="col-md-9">
+                                    <button id="submitButtonNotice" class="btn btn-primary" type="button">Save</button>
+                                    <button id="ResetButton" class="btn btn-secondary" type="reset">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+
+
+    <div class="partial-list">
+        @await Html.PartialAsync("~/Views/Notice/_Noticelist.cshtml", Model);
+    </div>
+
+
+
+    <!-- Employee Modal used for deletion -->
+    <div class="modal fade" id="noticemodal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <h1>Delete</h1>
+                        <p>Are you sure you want to delete ?</p>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button class="btn btn-primary deletebtn delete-item">Delete</button>
+                    <button class="btn btn-outline-primary cancelbtn" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--  Modal used for Toogle -->
+    <div class="modal fade" id="Togglemodal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Toggle Status</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p>Are you sure you want to Toogle ?</p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button class="btn btn-primary Toogle-btn">Toogle</button>
+                    <button class="btn btn-outline-primary cancelbtn" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/jquery.min.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+
+
+
+    //jQuery submit form when Enter key is pressed
+
+    $("#formIdCreateNotice").keypress(function (event) {
+        if (event.which == '13' && !event.shiftKey) {
+            $("#submitButtonNotice").click();
+            event.preventDefault();
+            //return false;
+        }
+    });
+
+
+    //For Create
+    // function will get executed
+    // on click of submit button
+    $("#submitButtonNotice").click(function (ev) {
+        var form = $("#formIdCreateNotice").serialize();
+        //var url = form.attr('/Designation/Edit');
+
+        var validator = $("#formIdCreateNotice").validate();
+        if (validator.form() == "") {
+            //If the "Please Select" option is selected display error.
+
+            $.toast({
+                heading: 'Error',
+                text: 'Create Failed Please fill out the Required Details',
+                icon: 'error',
+                position: 'top-right'
+            })
+
+            return false;
+        }
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Notice/Create",
+            data: form,
+            success: function (data) {
+                debugger
+                if (data == true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Notice Create Success',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+
+                    $.ajax({
+                        type: "GET",
+                        dataType: "html",
+                        url: "Notice/NoticeList",
+                        success: function (data) {
+                            debugger
+                            $('.partial-list').empty();
+                            $('.partial-list').append(data)
+                        }
+                    })
+                    $("#ResetButton").click();
+                    //reload page after create and Toast message nice na haha
+
+                    //setTimeout(function () {
+                    //    /*alert('Reloading Page');*/
+                    //    location.reload(true);
+                    //}, 3000);
+
+                }
+
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Create Failed Please fill out the Required Details',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+
+                }
+
+            },
+
+
+            error: function (data) {
+
+
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Notice Create Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+        });
+
+        //reload page after create and Toast message nice na haha
+
+        //setTimeout(function () {
+        //    /*alert('Reloading Page');*/
+        //    location.reload(true);
+        //}, 3000);
+
+    });
+
+    $(document).ready(function () {
+
+        $('.toogle-status').on('click', function () {
+            document.getElementsByClassName('Toogle-btn')[0].setAttribute("id", this.dataset.id);
+            $('#Togglemodal').modal('toggle');
+        });
+
+        $(".deletebtn").click(function () {
+            let id = this.id;
+            $.ajax({
+                type: "POST",
+                url: "/Notice/Delete",
+                data: { NoticeId: id },
+
+                success: function (result) {
+                    debugger
+                    $('#noticemodal').modal('toggle');
+
+                    if (result == true) {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Notice delete Success',
+                            icon: 'success',
+                            position: 'top-right'
+                        })
+
+                        $.ajax({
+                            type: "GET",
+                            dataType: "html",
+                            url: "Notice/NoticeList",
+                            success: function (data) {
+                                debugger
+                                $('.partial-list').empty();
+                                $('.partial-list').append(data)
+                            }
+                        })
+                    }
+                    else {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Notice delete Failed',
+                            icon: 'error',
+                            position: 'top-right'
+
+                        })
+                    }
+                },
+                error: function (response) {
+                    debugger
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Notice delete Failed',
+                        icon: 'error',
+                        position: 'top-right'
+
+                    })
+
+                }
+
+            });
+        });
+
+        $(".Toogle-btn").click(function () {
+            debugger;
+            let id = this.id;
+            $.ajax({
+                type: "POST",
+                url: "/Notice/ToogleStatus",
+                data: { NoticeId: id },
+
+                success: function (result) {
+                    debugger
+                    $('#Togglemodal').modal('toggle');
+
+                    if (result == true) {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Status Changed Success.',
+                            icon: 'success',
+                            position: 'top-right'
+                        })
+
+                        $.ajax({
+                            type: "GET",
+                            dataType: "html",
+                            url: "Notice/NoticeList",
+                            success: function (data) {
+                                debugger
+                                $('.partial-list').empty();
+                                $('.partial-list').append(data)
+                            }
+                        })
+                    }
+                    else {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Status Changed Failed.',
+                            icon: 'error',
+                            position: 'top-right'
+
+                        })
+                    }
+                },
+                error: function (response) {
+                    debugger
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Status Changed Failed.',
+                        icon: 'error',
+                        position: 'top-right'
+
+                    })
+
+                }
+
+            });
+        });
+    })
+
+
+
+    //$(".cancelbtn").click(function () {
+    //    $('#myModal').hide();
+    //});
+
+
+
+
+</script>
+

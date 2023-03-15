@@ -1,0 +1,365 @@
+﻿@model HRMS_Silicon.ViewModel.DesignationIndexVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row" id="create-form">
+    <div class="col-md-6 col-lg-12">
+        <div class="card">
+            <div class="Alert"></div>
+            <div class="card-header border-bottom-0">
+                <h4 class="card-title">Add Designation</h4>
+            </div>
+            <div class="card-body">
+                <form id="formIdCreateDesignation" class="form-horizontal" asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group row">
+                        <label for="inputName" class="col-md-3 form-label">Designation Name</label>
+                        <div class="col-md-9">
+                            <input asp-for="DesignationViewModel.Designation_name" class="form-control" id="inputName" placeholder="Name">
+                            <span asp-validation-for="DesignationViewModel.Designation_name" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group mb-0 mt-4 row justify-content-end">
+                        <div class="col-md-9">
+                            @*<button class="btn btn-primary" type="submit" value="Create">Save</button>*@
+                            
+                            <button id="submitButtonDesignation" class="btn btn-primary" type="button" >Save</button>
+                            
+                            <button class="btn btn-secondary" type="reset">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="row" id="list-of-designation">
+        <div class="col-md-6 col-lg-12">
+            <div class="card">
+                <div class="card-header  border-0">
+                    <h4 class="card-title">Designation Lists</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="hr-holiday_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="col-sm-12">
+                                <table class="table table-vcenter text-nowrap table-bordered border-bottom dataTable no-footer" id="hr-holiday" role="grid" aria-describedby="hr-holiday_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">S.N</th>
+                                            <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 73.6875px;">Designation</th>
+
+                                            <th class="border-bottom-0 sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 70.7344px;">Actions</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        @{ int i = 1; }
+                                        @foreach (var item in Model.DesignationPagedList)
+                                        {
+                                            if (item.Designation_id != 0)
+                                            {
+
+
+                                                <tr role="row" class="odd" data-id="@item.Designation_id">
+                                                    <td>@(i++)</td>
+                                                    <td>  @Html.DisplayFor(modelItem => item.Designation_name)</td>
+
+                                                    <td>
+
+                                                        <a class="btn btn-primary btn-icon btn-sm btnUpdate" data-ajax="true" asp-route-id="@item.Designation_id" data-id="@item.Designation_id" data-toggle="modal" data-target=".designation-model">
+                                                            Edit  <i class="feather feather-edit" data-toggle="tooltip" data-original-title="Edit"></i>
+                                                        </a>
+
+                                                        <a class="btn btn-danger btn-icon btn-sm delete-btn" data-ajax="true" data-id="@item.Designation_id" data-toggle="modal" data-target="#holidaymodal" data-original-title="Delete">Delete <i class="feather feather-trash-2"></i></a>
+                                                    </td>
+                                                </tr>
+
+
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers" id="hr-holiday_paginate">
+
+                                    <ul class="pagination">
+                                        @if (Model.DesignationPagedList.PageIndex > 1)
+                                        {
+                                            <li class="paginate_button page-item previous" id="hr-holiday_previous">
+                                                <a asp-action="Index"
+                                                   asp-route-pageNumber="@(Model.DesignationPagedList.PageIndex - 1)"
+                                                   aria-controls="hr-holiday" data-dt-idx="0" tabindex="0" class="page-link">
+                                                    Previous
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (Model.DesignationPagedList.PageIndex < Model.DesignationPagedList.TotalPages)
+                                        {
+                                            <li class="paginate_button page-item next " id="hr-holiday_next">
+                                                <a asp-action="Index"
+                                                   asp-route-pageNumber="@(Model.DesignationPagedList.PageIndex + 1)"
+                                                   aria-controls="hr-holiday" data-dt-idx="3" tabindex="0" class="page-link">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Holiday Modal -->
+@*<li class="paginate_button page-item active"><a href="#" aria-controls="hr-holiday" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>*@
+@*<li class="paginate_button page-item "><a href="#" aria-controls="hr-holiday" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>*@
+
+
+
+
+<!-- Holiday Modal used for deletion -->
+<div class="modal fade" id="holidaymodal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h1>Delete</h1>
+                    <p>Are you sure you want to delete ?</p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button class="btn btn-primary deletebtn delete-item">Delete</button>
+                <button class="btn btn-outline-primary cancelbtn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Holiday Modal used for edit-->
+
+<div class="modal fade designation-model" id="designation-model" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="designation-content">
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/jquery.min.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<script>
+
+    //jQuery submit form when Enter key is pressed
+
+    $("#formIdCreateDesignation").keypress(function (event) {
+        if (event.which == '13' && !event.shiftKey) {
+            $("#submitButtonDesignation").click();
+            event.preventDefault();
+            //return false;
+        }
+    });
+
+
+    //For Create
+    // function will get executed
+        // on click of submit button
+        $("#submitButtonDesignation").click(function (ev) {
+        debugger
+        var form = $("#formIdCreateDesignation").serialize();
+       
+
+            //var validator = $("#formIdCreateDesignation").validate();
+            //validator.form();
+
+            var validator = $("#formIdCreateDesignation").validate();
+            if (validator.form() == "") {
+                //If the "Please Select" option is selected display error.
+
+                $.toast({
+                    heading: 'Error',
+                    text: 'Create Failed Please fill out the Required Details',
+                    icon: 'error',
+                    position: 'top-right'
+                })
+
+                return false;
+            }
+
+
+
+
+
+        $.ajax({
+            type: "POST",
+        url: "/Designation/Create",
+        data: form,
+            success: function (data) {
+                debugger
+
+
+                if (data == true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Designation Create Success',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+
+
+                    setTimeout(function () {
+                        /*alert('Reloading Page');*/
+                        location.reload(true);
+                    }, 3000);
+
+                }
+
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Create Failed Please fill out the Required Details',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+
+
+                }
+
+            },
+
+        error: function (data) {
+           
+
+        debugger
+        $.toast({
+            heading: 'Error',
+        text: 'Designation Create Failed',
+        icon: 'error',
+        position: 'top-right'
+
+                })
+
+            }
+        });
+
+        //reload page after create and Toast message nice na haha
+
+        //setTimeout(function () {
+        //        /*alert('Reloading Page');*/
+        //        location.reload(true);
+        //    }, 3000);
+
+        });
+
+
+    // For Popup Edit
+
+    $(document).ready(function () {
+        $(".btnUpdate").on('click', function () {
+            debugger
+            var id = $(this).data("id");
+            $.ajax({
+                type: "Get",
+                url: "/Designation/Edit",
+                data: { "id": id },
+                success: function (response) {
+                    debugger
+                    $('#designation-content').html(response);
+                    //$('.designation-model').modal('show');
+                }
+            })
+        });
+    });
+
+    //For Delete
+
+    $(".deletebtn").click(function () {
+        debugger
+        let id = this.id;
+        $.ajax({
+            type: "POST",
+            url: "/Designation/Delete",
+            data: { id: id },
+
+            success: function (result) {
+                debugger
+
+                $('#holidaymodal').modal('toggle');
+
+                if (result == true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Designation delete Success',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+
+                    $('tr[data-id="' + id + '"]').remove();
+                }
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Designation Cannot be Deleted , because it has huge dependency on employeee details ',
+                        icon: 'error',
+                        position: 'top-right'
+
+                    })
+                }
+            },
+            error: function (response) {
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Designation delete Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+
+        });
+    });
+
+
+</script>
+
+@*@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }*@
+
+
+
+
+
+
+<!-- Holiday Modal -->
+@*<a asp-action="Edit" asp-route-id="@item.designation_id">Edit</a> |
+    <a asp-action="Details" asp-route-id="@item.designation_id">Details</a> |
+    <a asp-action="Delete" asp-route-id="@item.designation_id">Delete</a>*@
+

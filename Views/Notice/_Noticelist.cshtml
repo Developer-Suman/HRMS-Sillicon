@@ -1,0 +1,138 @@
+﻿@model HRMS_Silicon.ViewModel.NoticeIndexViewModel
+<style>
+    .status {
+        padding: 5px;
+        border: 0px solid;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white !important;
+        outline: none
+    }
+
+        .status:active {
+            box-shadow: 0.1px 0.1px 5px 0.1px inset white;
+            marker: none
+        }
+
+    .Notice-Active {
+        background-color: #22bb33;
+    }
+
+    .Notice-Deactive {
+        background-color: #f7284a;
+    }
+</style>
+<div class="row" id="list-of-notice">
+    <div class="col-md-6 col-lg-12">
+        <div class="card">
+            <div class="card-header  border-0">
+                <h4 class="card-title">Notice Lists</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="hr-notice_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+
+                        <div class="col-sm-12">
+                            <table class="table table-vcenter text-nowrap table-bordered border-bottom dataTable no-footer" id="hr-notice" role="grid" aria-describedby="hr-notice_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-notice" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">SN.</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-notice" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 73.6875px;">Date</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-notice" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">Subject</th>
+                                        <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-notice" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">Description</th>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-notice" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">IsActive</th>
+                                            <th class="border-bottom-0 sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 70.7344px;">Actions</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    @{ int i = 1; }
+                                    @foreach (var item in Model.NoticePagedList)
+                                    {
+                                        if (item.NoticeId != 0)
+                                        {
+                                            <tr role="row" class="odd" data-id="@item.NoticeId">
+                                                <td>@(i++)</td>
+
+                                                <td>
+
+                                                    @item.NoticeDate.ToShortDateString()
+
+                                                </td>
+                                                <td style="max-width:150px;overflow:hidden">
+                                                    @item.Subject
+                                                </td>
+                                                <td style="max-width:300px;overflow:hidden">
+                                                    @item.Description
+                                                </td>
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    <td>
+                                                        <a class="status toogle-status @(item.isActive?"Notice-Active":"Notice-Deactive")" data-id="@item.NoticeId">
+                                                            @(item.isActive?"Active":"InActive")
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-danger btn-icon btn-sm delete-btn" @*asp-action="Delete"*@ data-ajax="true" data-id="@item.NoticeId" data-toggle="modal" data-target="#noticemodal" data-original-title="Delete">Delete <i class="feather feather-trash-2"></i></a>
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="hr-notice_paginate">
+
+
+                                <ul class="pagination">
+                                    @if (Model.NoticePagedList.PageIndex > 1)
+                                    {
+                                        <li class="paginate_button page-item previous" id="hr-notice_previous">
+                                            <a asp-action="Index"
+                                               asp-route-pageNumber="@(Model.NoticePagedList.PageIndex - 1)"
+                                               aria-controls="hr-notice" data-dt-idx="0" tabindex="0" class="page-link">
+                                                Previous
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (Model.NoticePagedList.PageIndex < Model.NoticePagedList.TotalPages)
+                                    {
+                                        <li class="paginate_button page-item next " id="hr-notice_next">
+                                            <a asp-action="Index"
+                                               asp-route-pageNumber="@(Model.NoticePagedList.PageIndex + 1)"
+                                               aria-controls="hr-notice" data-dt-idx="3" tabindex="0" class="page-link ">
+                                                Next
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Employee Modal used for deletion -->
+<script>
+    $('.toogle-status').on('click', function () {
+        document.getElementsByClassName('Toogle-btn')[0].setAttribute("id", this.dataset.id);
+        $('#Togglemodal').modal('toggle');
+    });
+</script>

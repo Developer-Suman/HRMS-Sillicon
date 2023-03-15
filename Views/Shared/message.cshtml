@@ -1,0 +1,67 @@
+﻿<style>
+    .alert.alert-success {
+        border-color: #8cc474;
+        background: #a0d468;
+    }
+
+    .fade.in {
+        opacity: 1;
+    }
+
+    .alert {
+        margin-bottom: 20px;
+        margin-top: 0;
+        color: #fff;
+        border-width: 0;
+        border-left-width: 5px;
+        padding: 10px;
+        border-radius: 0;
+        border: 1px solid transparent;
+    }
+
+    div {
+        display: block;
+    }
+
+    .fade {
+        transition: opacity -2.85s linear;
+    }
+
+    body {
+        line-height: 1.428571;
+        font-family: 'Open Sans','Segoe UI';
+        font-size: 13px;
+    }
+</style>
+
+
+
+@{ if (TempData["message"] != null)
+    {
+
+        HRMS_Silicon.Helper.Alert alert = Newtonsoft.Json.JsonConvert.DeserializeObject<HRMS_Silicon.Helper.Alert>(TempData["message"].ToString());
+        if (alert.message_type == HRMS_Silicon.Helper.messageType.success)
+        {
+            <div class="alert alert-success fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <i class="mdi mdi-check-all"></i>
+                <strong>@alert.message</strong>
+            </div>
+            <br />
+        }
+        else
+        {
+            <div class="alert alert-danger fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <i class="mdi mdi-block-helper"></i>
+                <strong>@alert.message</strong>
+            </div>
+            <br />
+        }
+    }; }

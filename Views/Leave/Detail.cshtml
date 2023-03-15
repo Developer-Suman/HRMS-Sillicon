@@ -1,0 +1,124 @@
+﻿@model HRMS_Silicon.ViewModel.LeaveViewModel
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h3>Detail</h3>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-lg-12">
+        <div class="card user-pro-list overflow-hidden">
+            <div class="card-body">
+              
+                <h5 class=" mt-5 font-weight-semibold">Leave Details</h5>
+                <div class="table-responsive">
+                    <table class="table text-nowrap">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Employee Name</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span>
+                                        @Html.DisplayFor(model => model.EmployeeViewModel.First_name)
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Leave Date From</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span>
+                                        @Html.DisplayFor(model => model.Date_from)
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Leave Date To</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span>
+                                        @Html.DisplayFor(model => model.Date_to)
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Leave Applied On</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span>
+                                        @Html.DisplayFor(model => model.AppliedOnDate)
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Leave Type</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span>
+                                        @Html.DisplayFor(model => model.LeaveTypeEnum)
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Total Days of Leave</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span>
+                                        @Html.DisplayFor(model => model.TotalDays)
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Leave Reason</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span>
+                                        @Html.DisplayFor(model => model.Leave_reason)
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Leave Status</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span>
+                                        @Html.DisplayFor(model => model.LeaveApproval)
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+          
+            </div>
+        </div>
+    </div>
+    
+</div>
+<!-- End Row-->
+
+<div>
+    @*<a asp-action="Detail" asp-route-id="@Model.Leave_id">Detail</a> |*@
+    <a asp-action="Index" class="btn btn-danger">Back to List</a>
+</div>
+
+

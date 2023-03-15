@@ -1,0 +1,116 @@
+﻿.todo, .running, .completed, .overdue{
+    color: #111 !important;
+}
+
+select, select option{
+    font-size: 0.8rem !important;
+}
+
+ table{
+     min-height: 70vh;
+     
+ }
+
+td {
+    position: relative;
+}
+
+.task-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em;
+    border-radius: 4px;
+}
+
+
+    .task-content.running {
+        background-color: rgba(68,192,229,0.3);
+    }
+
+    .task-content.completed {
+        background-color: rgb(42, 182, 88, 0.30);
+    }
+
+    .task-content.overdue {
+        background-color: rgb(182, 106, 42, 0.30);
+    }
+
+    .task-content.todo {
+        background-color: rgb(206, 202, 24, 0.30);
+    }
+
+.task-detail {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5em;
+    line-height: 1.2;
+    font-size: 0.8rem;
+    border-left: 3px solid #54b3d7;
+}
+
+/*More info about the current task*/
+.more-detail { 
+    background-color: rgba(250, 250, 250, 0.1);
+    border: 1px solid rgba(14, 14, 14, 0.1);
+    box-shadow: 4px 4px 10px rgba(14, 14, 14, 0.1);
+    backdrop-filter: blur(4px);
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 20%;
+    width: max-content;
+    padding: 1em 1em 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.employee-image__container {
+    width: 2rem;
+    height: 2rem;
+}
+
+    .employee-image__container img {
+        border-radius: 50%;
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+/*Showing the more task info whike hovering it*/
+.task-content:hover + .more-detail, .more-detail:hover {
+    z-index: 1000;
+    transition: all 0.5s ease-in;
+}
+
+/*Task Priority*/
+.priority {
+    margin-top: 0.5em;
+    padding: 0.2em 0.5em;
+    color: #f1f1f1;
+    letter-spacing: 0.1em;
+    border-radius: 2px;
+}
+
+.high{
+    background-color: #f72828ff;
+}
+
+.medium{
+    background-color: #307d02ff
+}
+
+.low{
+    background-color: #9dad10ff;
+}
+
+/*customizing button*/
+
+.btn-custom{
+    font-weight: 900;
+    margin-left: 1em;
+    border: none;
+    background-color:transparent;
+    color: #f1f1f1;
+}
+ 

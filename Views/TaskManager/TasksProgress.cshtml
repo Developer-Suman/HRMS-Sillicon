@@ -1,0 +1,664 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "Tasks Progress";
+}
+
+<link href="~/css/TaskManager/taskProgress.css" rel="stylesheet" />
+<link href="~/css/TaskManager/allTasks.css" rel="stylesheet" />
+
+@*Add Task Button*@
+@await Html.PartialAsync("~/Views/TaskManager/_AddTask.cshtml")
+
+<section id="tasks-progress">
+    <div class="card">
+        <div class="card-body">
+
+            <div class="container d-flex justify-content-between align-items-center">
+
+                <h5>Tasks Progress of This Week</h5>
+
+                <div class=" d-flex">
+                    <div class="filter filter-by__project mr-2">
+                        <select name="project" id="project" class="form-control">
+                            <option value="AIMS">AIMS</option>
+                            <option value="Synako Central Inventory">Syanko Central Inventory</option>
+                            <option value="Sifaris">Sifaris</option>
+                            <option value="Alfa beta">Alfa beta</option>
+                        </select>
+                    </div>
+
+                    <div class="filter filter-by__employee">
+                        <select class="form-control" id="employee-name" name="Employee">
+                            <option value="Bikash Dumrakoti">Bikash Dumrakoti</option>
+                            <option value="Brajesh Gupta">Brajesh Gupta</option>
+                            <option value="Brajesh Gupta">Brajesh Gupta</option>
+                            <option value="Dorje Lama">Dorje Lama</option>
+                            <option value="Ram Kumar Shrestha">Ram Kumar Shrestha</option>
+                            <option value="Sujan Yonjan">Sujan Yonjan</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-responsive table-borderless">
+                <thead>
+                    <tr>
+                        <th>Sunday</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wensday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content running">
+
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority high">High</div>
+                                </div>
+
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content completed">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority high">High</div>
+                                </div>
+
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content overdue">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority medium">Medium</div>
+                                </div>
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content completed">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority medium">Medium</div>
+                                </div>
+
+
+                            </div>
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content overdue">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority low">Low</div>
+                                </div>
+
+                            </div>
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content completed">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority low">Low</div>
+                                </div>
+
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content overdue">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority low">Low</div>
+                                </div>
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content todo">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority high">High</div>
+                                </div>
+                            </div>
+
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td>
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content overdue">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority high">High</div>
+                                </div>
+
+                            </div>
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content todo">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority high">High</div>
+                                </div>
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content running">
+
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority high">High</div>
+                                </div>
+
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                        </td>
+
+                        <td>
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content todo">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority high">High</div>
+                                </div>
+                            </div>
+
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content completed">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority low">Low</div>
+                                </div>
+
+
+                            </div>
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content todo">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority low">Low</div>
+                                </div>
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content running">
+
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority medium">Medium</div>
+                                </div>
+
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content completed">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority medium">Medium</div>
+                                </div>
+
+                            </div>
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                        </td>
+
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content todo">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority high">High</div>
+                                </div>
+                            </div>
+
+
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td>
+                            @*running -> status classname should be dyanmic*@
+                            <div class="task-content completed">
+                                <div class="task-detail d-flex flex-column align-items-start">
+                                    <div class="task-detail__info">Upload Project to Git</div>
+                                    <div class="priority medium">Medium</div>
+                                </div>
+
+
+                            </div>
+                            <div class="more-detail ">
+                                <div class="employee">
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Brajesh Gupta" />
+                                        <span class="employee-name">Brajesh Gupta</span>
+                                    </div>
+                                    <div class="employee-image__container">
+                                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="Ram Kumar Shrestha" />
+                                        <span class="employee-name">Ram Kumar Shrestha</span>
+                                    </div>
+                                </div>
+
+                                <div class="Project">
+                                    <p class="mt-2 ">
+                                        Project: <br />
+                                        <strong>Syanko Central Inventory</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                        </td>
+
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+

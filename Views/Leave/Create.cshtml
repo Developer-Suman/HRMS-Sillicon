@@ -1,0 +1,265 @@
+﻿@model HRMS_Silicon.ViewModel.LeaveViewModelDetails
+
+@{ ViewData["Title"] = "Create"; }
+
+<style>
+    .required:after {
+        content: " *";
+        color: red;
+    }
+</style>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-8 col-md-12 col-lg-12">
+        <form id="formIdCreateLeave" asp-action="Create" method="post">
+            <div class="card">
+                <div class="card-header  border-0">
+                    <h4 class="card-title">Apply Leave</h4>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="card-body">
+                    <div class="leave-types">
+                        <div class="form-group">
+                            <label class="form-label required">Employee Name</label>
+
+
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("HRManager"))
+                            {@*@Html.DropDownListFor(x => x.LeaveVM.Employee_id, (SelectList)ViewBag.Employee, "Select Employee", new { @class = "form-control custom-select select2" })*@
+
+                                            <select asp-for="LeaveVM.Employee_id" class="form-control custom-select select2" asp-items="@(new SelectList(ViewBag.Employee, "Value", "Text"))">
+                                                <option selected disabled>Select Employee Name</option>
+                                            </select>
+                                                            <span asp-validation-for="LeaveVM.Employee_id" class="text-danger"></span>}
+                                                        else
+                                                        {
+                                            <input asp-for="LeaveVM.Employee_id" hidden class="form-control" value="@ViewBag.Employee" />
+                                                            <input value="@ViewBag.EmployeeName" class="form-control" readonly />
+                                                                            <span asp-validation-for="LeaveVM.Employee_id" class="text-danger"></span>}
+
+
+
+                        </div>
+                        @*<div class="form-group">
+                                <label class="form-label">Type of Leave</label>
+                                @Html.DropDownList("LeaveTypeEnum", Html.GetEnumSelectList<HRMS_Silicon.Enum.LeaveTypeEnum>(), "Select Leave", new { @class = "form-control custom-select select2" })
+                                <span asp-validation-for="LeaveVM.LeaveTypeEnum" class="text-danger"></span>
+
+                            </div>*@
+
+                        <div class="form-group">
+                            <label class="form-label required">Type of Leave</label>
+                            <select asp-for="LeaveVM.LeaveTypeEnum" class="form-control custom-select select2" asp-items="Html.GetEnumSelectList<HRMS_Silicon.Enum.LeaveTypeEnum>()">
+                                <option selected disabled>Select Leave Type</option>
+
+                            </select>
+                            <span asp-validation-for="LeaveVM.LeaveTypeEnum" class="text-danger"></span>
+
+                        </div>
+                        <div class="leave-content active">
+                            <div class="form-group">
+                                <label class="form-label required">Leave Date From:</label>
+                                <div class="input-group">
+                                    @*@Html.TextBoxFor(a => a.LeaveVM.Date_from, new { @class = "form-control fc-datepicker", @type = "date", @name = "Leave From Date", @id = "id" })*@
+                                    <input asp-for="LeaveVM.Date_from" class="form-control" />
+                                    <span asp-validation-for="LeaveVM.Date_from" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="leave-content active">
+                            <div class="form-group">
+                                <label class="form-label required">Leave Date To:</label>
+                                <div class="input-group">
+                                    @*@Html.TextBoxFor(a => a.LeaveVM.Date_to, new { @class = "form-control fc-datepicker", @type = "date", @name = "Leave Upto Date", @id = "id" })*@
+                                    <input asp-for="LeaveVM.Date_to" class="form-control" />
+                                    <span asp-validation-for="LeaveVM.Date_to" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Cause of Leave:</label>
+
+                            <textarea rows="3" class="form-control" asp-for="LeaveVM.Leave_reason" placeholder="Cause of Leave"></textarea>
+
+                            <span asp-validation-for="LeaveVM.Leave_reason" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="d-flex">
+                        <div class="ml-auto">
+                            <input id="submitButtonLeave" type="button" value="Save" class="btn btn-primary" />
+                            @*<a asp-action="Index" class="btn btn-outline-primary">Close</a>*@
+                            <a asp-action="Index" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    @*<div class="col-xl-4 col-lg-12 col-md-12">
+            <div class="card">
+                <div class="p-0">
+                    <div class="card-header border-0">
+                        <h4 class="card-title">Calendar</h4>
+                    </div>
+                    <div class="leave-calendar mt-3"></div>
+                </div>
+            </div>
+        </div>*@
+    <div class="col-xl-4 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header  border-0">
+                <h4 class="card-title">Leaves Overview</h4>
+            </div>
+            <div class="card-body">
+                <div id="leavesoverview" class="mx-auto pt-2"></div>
+                <div class="row pt-4 mx-auto text-center">
+                    <div class="col-lg-9 col-md-12 mx-auto d-block">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label bg-primary mr-2 my-auto"></span>Casual Leaves
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3 mt-md-0">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label badge-danger mr-2 my-auto"></span>Sick Leaves
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label bg-secondary mr-2 my-auto"></span>Study Leaves
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="d-flex font-weight-semibold">
+                                    <span class="dot-label bg-success mr-2 my-auto"></span>Remaining Leaves
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+
+<div>
+    <a asp-action="Index" class="btn btn-danger">Back to List</a>
+</div>
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/jquery.min.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+
+    //jQuery submit form when Enter key is pressed
+
+    $("#formIdCreateLeave").keypress(function (event) {
+        if (event.which == '13' && !event.shiftKey) {
+            $("#submitButtonLeave").click();
+            event.preventDefault();
+            //return false;
+        }
+    });
+
+
+
+    $("#submitButtonLeave").click(function (ev) {
+        debugger
+
+        var form = $("#formIdCreateLeave").serialize();
+        //$("#formIdCreateEmployee").validate();
+        //$("#commentForm").validate();
+
+        var validator = $("#formIdCreateLeave").validate();
+        if (validator.form() == "") {
+            //If the "Please Select" option is selected display error.
+
+            $.toast({
+                heading: 'Error',
+                text: 'Create Failed Please fill out the Required Details',
+                icon: 'error',
+                position: 'top-right'
+            })
+
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Leave/Create",
+            data: form,
+            success: function (data) {
+                debugger
+
+                if (data == true) {
+
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Leave Create Success',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+
+
+
+                    setTimeout(function () {
+                        /*alert('Reloading Page');*/
+                        //location.reload(true);
+                        window.location.href = "Index"
+                    }, 3000);
+                }
+
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Leave Create Failed Please fill out the Required Details',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+
+                    //$("#formIdCreateEmployee").validate();
+
+
+                }
+
+
+            },
+
+
+            error: function (data) {
+
+
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Leave Create Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+        });
+
+        //reload page after create and Toast message nice na haha
+
+        //setTimeout(function () {
+        //    /*alert('Reloading Page');*/
+        //    location.reload(true);
+        //}, 3000);
+
+    });
+
+
+</script>

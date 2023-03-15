@@ -1,0 +1,352 @@
+﻿@model HRMS_Silicon.ViewModel.EmployeeViewModelDetails
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="Alert"></div>
+<!--Page header-->
+<div class="page-header d-xl-flex d-block">
+    <div class="page-leftheader">
+        <h4 class="page-title">Employees</h4>
+    </div>
+    <div class="page-rightheader ml-md-auto">
+        <div class="align-items-end flex-wrap my-auto right-content breadcrumb-right">
+            <div class="btn-list">
+                <a asp-action="Create" class="btn btn-primary mr-3">Add New Employee</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Page header-->
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="row mt-4">
+                <div class="col-4">
+                    <div class="card-header  border-0">
+                        <h4 class="card-title">Employees List</h4>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="mt-0">
+                        <form asp-action="Index" method="get" class="form-inline">
+                            <div class="search-element">
+                                <input type="search" class="form-control header-search" placeholder="Search By FullName" name="FullNameForSearch" aria-label="Search" tabindex="1">
+                                <button class="btn btn-primary-color">
+                                    <i class="feather feather-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div><!-- SEARCH -->
+                </div>
+                <div class="col-4">
+
+                    <div class="mt-0">
+                        <form action="/Employee/Index" method="get" class="form-inline">
+                            <div class="search-element">
+                                <input type="search" class="form-control header-search" placeholder="Search By EmployeeNumber" name="EmployeeNumberForSearch" aria-label="Search" tabindex="1">
+                                <button class="btn btn-primary-color">
+                                    <i class="feather feather-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div><!-- SEARCH -->
+                </div>
+
+                <div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="hr-table">
+                                <thead>
+                                    <tr>
+                                        <th class="border-bottom-0 w-5">S.N.</th>
+                                        <th class="border-bottom-0">Full Name</th>
+                                        <th class="border-bottom-0">Department</th>
+                                        <th class="border-bottom-0">Designation</th>
+                                        <th class="border-bottom-0">Email</th>
+                                        <th class="border-bottom-0">Employee Number</th>
+                                        <th class="border-bottom-0">Status</th>
+                                        <th class="border-bottom-0">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ int i = 1; }
+
+                                    @foreach (var item in Model.EmployeePagedList)
+                                    {
+                                        if (item.Employee_Id != 0)
+                                        {
+                                            <tr data-id="@item.Employee_Id">
+                                                <td>@(i++)</td>
+                                                <td>
+                                                    @*<img class="avatar avatar-md brround mr-3" alt="img" src="~/Images/@item.Image" width="40" height="40"/>*@
+                                                    @Html.DisplayFor(modelItem => item.FullName)
+
+                                                </td>
+                                                <td>
+                                                  
+                                                        @Html.DisplayFor(modelItem => item.DepartmentViewModel.Department_name)
+                                                    
+                                                    
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DesignationViewModel.Designation_name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Email)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.EmployeeNumber)
+                                                </td>
+                                                <td class="statuss-btnss">
+
+                                                    @if (item.Is_Active == false)
+                                                    {
+
+                                                        @*<label class="badge badge-light">Enabled</label>*@
+                                                        <a class="badge badge-danger btn-stss btn-inactivate text-white">Disabled</a>
+
+
+                                                    }
+                                                    else if (item.Is_Active == true)
+                                                    {
+                                                        @*<label class="badge badge-danger">Disabled</label>*@
+                                                        <a class="badge badge-success btn-stss btn-activate text-white">Enabled</a>
+
+                                                    }
+
+                                                </td>
+                                                <td class="actions-btnss">
+                                                    <a class="btn btn-primary btn-icon btn-sm action-btnss1" asp-action="Edit" asp-route-id="@item.Employee_Id">
+                                                        <i class="feather feather-edit" data-toggle="tooltip" data-original-title="Edit"></i>
+                                                    </a>
+                                                    <a class="btn btn-primary btn-icon btn-sm action-btnss1" asp-action="Detail" asp-route-id="@item.Employee_Id"><i class="feather feather-info" data-toggle="tooltip" data-original-title="Detail"></i></a>
+
+
+                                                    <a class="btn btn-danger btn-icon btn-sm delete-btn action-btnss1" data-ajax="true" data-id="@item.Employee_Id" data-toggle="modal" data-target="#holidaymodal" data-original-title="Delete"> <i class="feather feather-trash-2"></i></a>
+
+                                                    @if (item.Is_Active == false)
+                                                    {
+                                                        @*<a class="badge badge-danger" href="/Employee/ChangeEmployeeStatus/@item.Employee_Id">Inactivate</a>*@
+                                                        <a onclick="ChangeStatuss(this)" class="badge badge-success btn-stss btn-activate text-white" id="@item.Employee_Id">Activate</a>
+                                                    }
+                                                    else if (item.Is_Active == true)
+                                                    {
+
+                                                        @*<a class="badge badge-light" href="/Employee/ChangeEmployeeStatus/@item.Employee_Id">Activate</a>*@
+                                                        <a onclick="ChangeStatuss(this)" class="badge badge-danger btn-stss btn-inactivate text-white" id="@item.Employee_Id">Inactivate</a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-7">
+
+                                <div class="dataTables_paginate paging_simple_numbers" id="hr-holiday_paginate">
+
+                                    <ul class="pagination">
+                                        @if (Model.EmployeePagedList.PageIndex > 1)
+                                        {
+                                            <li class="paginate_button page-item previous" id="hr-holiday_previous">
+                                                <a asp-action="Index"
+                                                   asp-route-pageNumber="@(Model.EmployeePagedList.PageIndex - 1)"
+                                                   aria-controls="hr-holiday" data-dt-idx="0" tabindex="0" class="page-link">
+                                                    Previous
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (Model.EmployeePagedList.PageIndex < Model.EmployeePagedList.TotalPages)
+                                        {
+                                            <li class="paginate_button page-item next " id="hr-holiday_next">
+                                                <a asp-action="Index"
+                                                   asp-route-pageNumber="@(Model.EmployeePagedList.PageIndex + 1)"
+                                                   aria-controls="hr-holiday" data-dt-idx="3" tabindex="0" class="page-link">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+<!-- Holiday Modal used for deletion -->
+<div class="modal fade" id="holidaymodal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h1>Delete</h1>
+                    <p>Are you sure you want to delete ?</p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary deletebtn delete-item">Delete</button>
+                <button class="btn btn-outline-primary cancelbtn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/jquery.min.js"></script>
+@*<script src="~/assets/plugins/jquery/jquery.min.js"></script>*@
+
+<script>
+    $(".deletebtn").click(function () {
+        debugger
+        let id = this.id;
+        $.ajax({
+            type: "POST",
+            url: "/Employee/Delete",
+            data: { id: id },
+
+
+            success: function (result) {
+                debugger
+
+                $('#holidaymodal').modal('toggle');
+
+                if (result == true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Employee delete Success',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+
+                    $('tr[data-id="' + id + '"]').remove();
+                }
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Employee delete Failed',
+                        icon: 'error',
+                        position: 'top-right'
+
+                    })
+                }
+            },
+            error: function (response) {
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Employee delete Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+
+
+        });
+    });
+
+    //$(".btn-stss").on('click', ChangeStatuss);
+
+    function ChangeStatuss(element) {
+        debugger
+        let id = element.id;
+        //let id = element.id;
+
+        $.ajax({
+            type: "POST",
+            url: "/Employee/ChangeEmployeeStatus",
+            data: { id: id },
+            async: false,
+            success: function (result) {
+                debugger
+                if (result == true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Employee Status Changed',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+
+                    var activeBtns = $("tr[data-id='" + id + "']").children('.actions-btnss').children('.btn-activate').length;
+                    var inactiveBtns = $("tr[data-id='" + id + "']").children('.actions-btnss').children('.btn-inactivate').length
+
+                    if (activeBtns > 0) {
+                        $("tr[data-id='" + id + "']").children('.actions-btnss').children('.btn-activate').remove();
+
+                     
+
+                        $("tr[data-id='" + id + "']").children('.actions-btnss').append('<a onclick="ChangeStatuss(this)" class="badge badge-danger btn-stss btn-inactivate text-white" id = "' + id + '">Inactivate</a>');
+
+                        //below will be done for status
+
+                        $("tr[data-id='" + id + "']").children('.statuss-btnss').children('.btn-inactivate').remove();
+
+                        $("tr[data-id='" + id + "']").children('.statuss-btnss').html("");
+
+                        $("tr[data-id='" + id + "']").children('.statuss-btnss').append('<a class="badge badge-success btn-stss btn-activate text-white">Enabled</a>'); 
+
+
+
+                    }
+                    else if (inactiveBtns > 0) {
+                        $("tr[data-id='" + id + "']").children('.actions-btnss').children('.btn-inactivate').remove();
+
+                      
+
+                        $("tr[data-id='" + id + "']").children('.actions-btnss').append('<a onclick="ChangeStatuss(this)" class="badge badge-success btn-stss btn-activate text-white" id="' + id + '">Activate</a>');
+
+                        //below two line of code  are done for status change
+                        $("tr[data-id='" + id + "']").children('.statuss-btnss').children('.btn-activate').remove();
+
+
+                        $("tr[data-id='" + id + "']").children('.statuss-btnss').html("");
+
+                        $("tr[data-id='" + id + "']").children('.statuss-btnss').append(' <a class="badge badge-danger btn-stss btn-inactivate text-white">Disabled</a>');
+
+                    }
+                }
+                else if (result == false) {
+
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Employee status error',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+                }
+            },
+            error: function (response) {
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Employee status error',
+                    icon: 'error',
+                    position: 'top-right'
+                })
+            }
+        });
+    }
+</script>

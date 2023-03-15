@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+<h1>All Users</h1>
+
+@*@if (Model.Any())
+{*@
+    <a asp-area="Identity" asp-page="/Account/Register"
+       class="btn btn-primary mb-3" style="width:auto">
+        <i class="feather feather-user-plus sidemenu_icon"></i>  Add new user
+    </a>
+
+    <div class="row" id="list-of-Users">
+        <div class="col-md-6 col-lg-12">
+            <div class="card">
+                <div class="card-header  border-0">
+                    <h4 class="card-title">Users Lists</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="hr-holiday_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="col-sm-12">
+                                <table class="table table-vcenter text-nowrap table-bordered border-bottom dataTable no-footer" id="hr-holiday" role="grid" aria-describedby="hr-holiday_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="No: activate to sort column ascending" style="width: 24px;">User Name</th>
+                                            @*<th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 73.6875px;">User Id</th>*@
+
+                                            <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 73.6875px;">User Role ID</th>
+                                            <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 73.6875px;">Employee ID</th>
+                                            <th class="border-bottom-0 w-5 sorting" tabindex="0" aria-controls="hr-holiday" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 73.6875px;">Email</th>
+                                            @*<th class="border-bottom-0 sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 70.7344px;">Actions</th>*@
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        @*@{ int i = 1; }*@
+                                        @foreach (var user in Model)
+                                        {
+                                            //if (user.Id = )
+                                            //{
+
+
+                                        <tr role="row" class="odd" data-id="@user.Id">
+                                            @*<td>@(i++)</td>*@
+                                            <td>  @Html.DisplayFor(modelItem => user.UserName)</td>
+                                            @*<td>  @Html.DisplayFor(modelItem => user.UserRole.Name)</td>*@
+                                            <td>  @Html.DisplayFor(modelItem => user.UserRoleId)</td>
+                                            <td>  @Html.DisplayFor(modelItem => user.EmployeeId)</td>
+                                            <td>  @Html.DisplayFor(modelItem => user.Email)</td>
+
+
+                                            @*<td>
+
+                                                <a class="btn btn-primary btn-icon btn-sm btnUpdate" data-ajax="true" asp-route-id="@user.Id" data-id="@user.Id" data-toggle="modal" data-target=".designation-model">
+                                                    Edit  <i class="feather feather-edit" data-toggle="tooltip" data-original-title="Edit"></i>
+                                                </a>
+
+                                                <a class="btn btn-danger btn-icon btn-sm delete-btn" data-ajax="true" data-id="@user.Id" data-toggle="modal" data-target="#holidaymodal" data-original-title="Delete">Delete <i class="feather feather-trash-2"></i></a>
+                                            </td>*@
+                                        </tr>
+
+
+                                            }
+                                        @*}*@
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @*foreach (var user in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                User Id : @user.Id
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@user.UserName</h5>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="btn btn-danger">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No users created yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a user
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               href="/Identity/Account/Register">
+                <i class="feather feather-user-plus sidemenu_icon"></i>
+                Add new user
+            </a>
+
+        </div>
+    </div>
+}*@

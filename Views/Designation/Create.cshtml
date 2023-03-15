@@ -1,0 +1,57 @@
+﻿@model HRMS_Silicon.ViewModel.DesignationIndexVM
+
+
+<hr />
+<div class="container" style="max-width:785px;">
+    @*<div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="designation_id" />
+                    <div class="form-group">
+                        <label asp-for="designation_name" class="control-label"></label>
+                        <input asp-for="designation_name" class="form-control" />
+                        <span asp-validation-for="designation_name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>*@
+    <div class="row">
+        <div class="col-lg-7 col-xl-7 col-md-6 col-sm-7">
+            <div class="card">
+                <div class="card-header border-bottom-0">
+                    <h4 class="card-title">Add Designation</h4>
+                </div>
+                <div class="card-body">
+                    <form class="form-horizontal" asp-action="Create" method="post">
+                        <div class="form-group row">
+                            <label for="inputName" class="col-md-3 form-label">Designation Name</label>
+                            <div class="col-md-9">
+                                <input type="text" asp-for="DesignationViewModel.Designation_name" class="form-control" id="inputName" placeholder="Name">
+                                <span asp-validation-for="DesignationViewModel.Designation_name" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group mb-0 mt-4 row justify-content-end">
+                            <div class="col-md-9">
+                                <button class="btn btn-primary" type="submit" value="Create">Save</button>
+                                <button class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

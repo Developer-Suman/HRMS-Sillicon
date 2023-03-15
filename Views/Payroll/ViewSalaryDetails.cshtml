@@ -1,0 +1,232 @@
+﻿@model List<HRMS_Silicon.ViewModel.SalaryDetailVM>
+@*@{ var a = Model; }*@
+
+@{ ViewData["Title"] = "Edit"; }
+
+@*<link href="~/lib/JqueryToast/jquery.toast.css" rel="stylesheet" />*@
+<hr />
+<div class="container" style="max-width:785px;">
+    <div class="row">
+        <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header border-bottom-0">
+                    <h4 class="card-title">Salary Details</h4>
+                </div>
+                <div class="card-body">
+                    <form id="formIdSalaryDetails" class="form-horizontal" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <table class="table table-vcenter text-nowrap table-bordered border-bottom dataTable no-footer" id="hr-employee" role="grid" aria-describedby="hr-employee_info">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        S.N
+                                    </th>
+                                    <th>
+                                        Employee's Salary
+                                    </th>
+                                    <th>
+                                        Implementation Date
+                                    </th>
+                                    <th>
+                                        Salary Status
+                                    </th>
+                                    @if (Model.Where(x => x.SalaryImplementingDate > DateTime.Now).Any())
+                                    {
+                                        <th>
+                                            Action
+                                        </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                    foreach (var item in Model.OrderBy(x => x.SalaryImplementingDate))
+                                    {
+                                        <tr>
+                                            <td>
+                                                @i
+                                            </td>
+                                            @if (item.SalaryImplementingDate > DateTime.Now)
+                                            {
+
+                                                <td>
+                                                    <input asp-for="@item.Employee_id" value="@ViewBag.EmployeeId" name="Employee_id" type="hidden" class="form-control">
+                                                    <input asp-for="@item.SalaryDetailId" name="salaryDetailId" type="hidden" class="form-control">
+                                                    <input asp-for="@item.EmployeeSalary" id="EmpSalary" name="EmployeeSalary" type="number" class="form-control" required>
+                                                    <span asp-validation-for="@item.EmployeeSalary" class="text-danger"></span>
+                                                </td>
+                                                <td>
+                                                    <input asp-for="@item.SalaryImplementingDate" id="ImpDate" name="SalaryImplementingDate" type="date" class="form-control" required>
+                                                    <span asp-validation-for="@item.SalaryImplementingDate" class="text-danger"></span>
+                                                </td>
+                                                <td>
+                                                    <input asp-for="@item.SalaryStatus" id="SalaryStatus" name="SalaryStatus" type="checkbox" class="form-control">
+                                                    <span asp-validation-for="@item.SalaryStatus" class="text-danger"></span>
+                                                </td>
+                                                @if (Model.Where(x => x.SalaryImplementingDate > DateTime.Now).Any())
+                                                {
+                                                    <td>
+                                                        <a class="btn btn-danger btn-icon btn-sm Delete-Details" id="@item.SalaryDetailId" data-toggle="modal">
+                                                            <i class="feather feather-trash-2" data-toggle="tooltip" data-original-title="Delete Salary Details"></i>
+                                                        </a>
+                                                    </td>
+                                                }
+                                            }
+                                            else
+                                            {
+
+                                                <td>
+                                                    @item.EmployeeSalary
+                                                </td>
+                                                <td>
+                                                    @item.SalaryImplementingDate.ToShortDateString()
+                                                </td>
+                                                <td style="text-align:center">
+                                                    @if (item.SalaryStatus)
+                                                    {
+                                                        <i class="feather feather-check" style="color:springgreen" data-toggle="tooltip" data-original-title="View Salary Details"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="feather feather-x" style="color:maroon" data-toggle="tooltip" data-original-title="View Salary Details"></i>
+                                                    }
+                                                </td>
+                                                @if (Model.Where(x => x.SalaryImplementingDate > DateTime.Now).Any())
+                                                {
+                                                    <td></td>
+                                                }
+                                            }
+
+                                        </tr>
+                                        i++;
+                                    }
+
+                                }
+                            </tbody>
+                        </table>
+                        @if (Model.Where(x => x.SalaryImplementingDate > DateTime.Now).Any())
+                        {
+                            <div class="form-group mb-0 mt-4 row justify-content-center">
+                                <div class="">
+                                    <button id="editButtonSalaryDetails" class="btn btn-primary" type="button" value="Update">Update</button>
+                                    <a class="btn btn-secondary btn-cancel" data-toggle="modal" data-target=".Salary-detail-modal">Cancel</a>
+
+                                </div>
+                            </div>
+                        }
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+@*<script src="~/lib/JqueryToast/jquery.toast.js"></script>*@
+<script src="~/lib/JqueryToast/jquery.toast.js"></script>
+<script src="~/lib/JqueryToast/jquery.toast.js"></script>
+<script>
+    // function will get executed
+    // on click of submit button
+    $("#editButtonSalaryDetails").click(function (ev) {
+        debugger
+        var form = $("#formIdSalaryDetails").serialize();
+        //var url = form.attr('/Designation/Edit');
+        let formCount = document.getElementsByName('EmployeeSalary').length;
+        var validator = $("#formIdSalaryDetails").validate();
+        if (validator.form() == "") {
+            //If the "Please Select" option is selected display error.
+
+            $.toast({
+                heading: 'Error',
+                text: 'Create Failed Please fill out the Required Details',
+                icon: 'error',
+                position: 'top-right'
+            })
+
+            return false;
+        } else if (formCount > 1) {
+            $('.Salary-detail-modal').modal('toggle');
+            $.toast({
+                heading: 'Error',
+                text: 'Only One Salary Details Can be Edited.Please Delete the Salary Details except the Details you want to Edit and Try Again!!',
+                icon: 'error',
+                position: 'top-right'
+            })
+            //alert('Only One Salary Details Can be Edited.Please Delete the Salary Details except the Details you want to Edit and Try Again!!');
+        } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Payroll/EditSalaryDetail",
+                        data: form,
+                        success: function (data) {
+                            debugger
+
+                            $('.Salary-detail-modal').modal('toggle');
+
+                            $.toast({
+                                heading: 'Success',
+                                text: 'Salary Details Edited Successfully!!',
+                                icon: 'success',
+                                position: 'top-right'
+                            })
+                        },
+                        error: function (data) {
+                            $('.Salary-detail-modal').modal('toggle');
+
+                            debugger
+                            $.toast({
+                            heading: 'Error',
+                            text: 'Salary Details Edit Failed!!',
+                            icon: 'error',
+                            position: 'top-right'
+
+                            })
+
+                        }
+                    });
+               }
+
+
+    });
+
+
+    $('.Delete-Details').on('click', function () {
+        let SalaryDetailId = this.id;
+
+        $.ajax({
+            type: "POST",
+            url: "/Payroll/DeleteSalaryDetail",
+            data: { SalaryDetailId: SalaryDetailId },
+            dataType: "json",
+            success: function (data) {
+                $('.Salary-detail-modal').modal('toggle');
+                if (data) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Salary Details Deleted Successfully!!',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+                } else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Salary Details Deleted Failed!!',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+                }
+
+
+            }
+        });
+    });
+</script>

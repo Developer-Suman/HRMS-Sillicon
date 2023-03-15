@@ -1,0 +1,399 @@
+﻿@model HRMS_Silicon.ViewModel.EmployeeViewModelDetails
+@{
+    ViewData["Title"] = "SalaryDetails";
+}
+
+<style>
+    .Employee-Image {
+        margin-bottom: 20px
+    }
+
+        .Employee-Image > img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+</style>
+<body>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row" id="create-form">
+            <div class="col-md-6 col-lg-12">
+                <div class="Alert"></div>
+                <div class="card flex-row">
+
+
+                    <div class="col-md-6 ">
+                        <div class="card-header border-bottom-0">
+                            <h4 class="card-title">
+                                Update Salary
+                            </h4>
+                        </div>
+                        <div class="card-body">
+
+                            <form id="formIdUpdateSalary" class="form-horizontal " asp-action="Create" asp-route-returnUrl="" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group row">
+                                    <label for="inputName" class="col-md-3 form-label">Employee</label>
+                                    <div class="col-md-9">
+                                        <select asp-for="salaryDetail.Employee_id" id="Employee_id" class="form-control" asp-items="@(new SelectList(Model.EmployeeViewModels,"Employee_Id","FullName"))">
+                                            <option value="">Select Employee</option>
+                                        </select>
+                                        <span asp-validation-for="salaryDetail.Employee_id" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputName" class="col-md-3 form-label">Implementation Date</label>
+                                    <div class="col-md-9">
+                                        <input asp-for="salaryDetail.SalaryImplementingDate" type="date" value="" id="ImpDate" class="form-control">
+                                        <span asp-validation-for="salaryDetail.SalaryImplementingDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputName" class="col-md-3 form-label">Employee Salary</label>
+                                    <div class="col-md-9">
+                                        <input asp-for="salaryDetail.EmployeeSalary" type="number" id="EmpSalary" class="form-control" placeholder="Employee's Salary">
+                                        <span asp-validation-for="salaryDetail.EmployeeSalary" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label asp-for="salaryDetail.SalaryStatus" class="col-md-3 form-label">Salary Status</label>
+                                    <div class="col-md-9">
+                                        <input asp-for="salaryDetail.SalaryStatus" id="SalaryStatus" type="checkbox" class="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-0 mt-4 row justify-content-end">
+                                    <div class="col-md-9">
+                                        <button id="submitUpdateSalary" class="btn btn-primary" type="button">Save</button>
+                                        <button id="ResetButton" class="btn btn-secondary" type="reset">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 p-4 Employee-info" style="display:none">
+                        <div class="col-md-12 d-flex justify-content-center Employee-Image">
+                            <img src="~/Img/user1111.jpg" alt="employee Image" />
+                        </div>
+                        <div class="d-flex">
+                            <div class="col-md-6">
+                                Employee id : <span id="EmployeeId"></span>
+                                <br />
+                                <br />
+                                EmployeeNo : <span id="EmployeeNo"></span>
+                                <br />
+                                <br />
+                                Department : <span id="Department"></span>
+                                <br />
+                                <br />
+                                Address : <span id="Address"></span>
+                                <br />
+                                <br />
+                                Gender : <span id="Gender"></span>
+                                <br />
+                                <br />
+                                DOB :  <span id="DOB"></span>
+                            </div>
+                            <div class="col-md-6">
+                                Employee Name : <span id="EmployeeName"></span>
+                                <br />
+                                <br />
+                                Email : <span id="Email"></span>
+                                <br />
+                                <br />
+                                Designation : <span id="Designation"></span>
+                                <br />
+                                <br />
+                                Contact : <span id="Contact"></span>
+                                <br />
+                                <br />
+                                Status : <span id="Status"></span>
+                                <br />
+                                <br />
+                                Enroll Date : <span id="EnrollDate"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+
+
+    <div class="partial-list">
+        @await Html.PartialAsync("~/Views/Payroll/_EmployeeList.cshtml", Model);
+    </div>
+
+
+    <div class="modal fade Salary-detail-modal" id="Salary-detail-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="Salary-detail-content">
+            </div>
+
+        </div>
+    </div>
+</body>
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/jquery.min.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+
+    $('#Employee_id').on('change', function () {
+        let employee_id = this.value;
+        $.ajax({
+            type: "GET",
+            url: "/Payroll/GetEmployeeDetailsById",
+            data: { EmployeeId: employee_id },
+            dataType: "json",
+            success: function (data) {
+                debugger
+                if (data.employee_Id > 0) {
+                    let dob = new Date(data.dob);
+                    let dobmonth = dob.getMonth() + 1;
+                    let enrollDate = new Date(data.joining_date);
+                    let enrollmonth = enrollDate.getMonth() + 1;
+                    let gender;
+                    if (data.genderEnum == 0) {
+                        gender = "Male"
+                    } else if (data.genderEnum == 1) {
+                        gender = "Female"
+                    } else {
+                        gender = "Other"
+                    }
+                    let Status = "InActive";
+                    if (data.is_Active) {
+                        Status = "Active";
+                    }
+                    let Contact = data.contact_1;
+                    if (data.contact_2 != null) {
+                        Contact = Contact + "," + data.contact_2;
+                    }
+
+                    $('#EmployeeId').html(data.employee_Id);
+                    $('#EmployeeNo').html(data.employeeNumber);
+                    $('#Department').html(data.departmentViewModel.department_name);
+                    $('#Address').html(data.address);
+                    $('#Gender').html(gender);
+                    $('#DOB').html(dob.getFullYear() + "-" + dobmonth + "-" + dob.getDate());
+
+                    $('#EmployeeName').html(data.fullName);
+                    $('#Email').html(data.email);
+                    $('#Designation').html(data.designationViewModel.designation_name);
+                    $('#Contact').html(Contact);
+                    $('#Status').html(Status);
+                    $('#EnrollDate').html(enrollDate.getFullYear() + "-" + enrollmonth + "-" + enrollDate.getDate());
+
+                    $('.Employee-info').css("display", "block");
+                } else {
+                    debugger
+                    $('.Employee-info').css("display", "none");
+
+                    $('#EmployeeId').html("");
+                    $('#Department').html("");
+                    $('#Address').html("");
+                    $('#Gender').html("");
+                    $('#DOB').html("");
+
+                    $('#EmployeeName').html("");
+                    $('#Designation').html("");
+                    $('#Contact').html("");
+                    $('#Status').html("");
+                    $('#EnrollDate').html("");
+                }
+
+            }
+        });
+    });
+
+    //jQuery submit form when Enter key is pressed
+
+    $("#formIdUpdateSalary").keypress(function (event) {
+        if (event.which == '13' && !event.shiftKey) {
+            $("#submitUpdateSalary").click();
+            event.preventDefault();
+            //return false;
+        }
+    });
+
+    //For Create
+    // function will get executed
+    // on click of submit button
+    $("#submitUpdateSalary").click(function (ev) {
+
+        var validator = $("#formIdUpdateSalary").validate();
+        if (validator.form() == "") {
+            //If the "Please Select" option is selected display error.
+
+            $.toast({
+                heading: 'Error',
+                text: 'Create Failed Please fill out the Required Details',
+                icon: 'error',
+                position: 'top-right'
+            })
+
+            return false;
+        }
+        let Employee_id = $('#Employee_id').val();
+        let ImpDate = $('#ImpDate').val();
+        let EmpSalary = $('#EmpSalary').val();
+        let salaryStatus = $('#SalaryStatus').is(':checked');
+        var form = {
+            Employee_id: Employee_id,
+            SalaryImplementingDate: ImpDate,
+            EmployeeSalary: EmpSalary,
+            SalaryStatus: salaryStatus,
+        };
+        debugger
+        $.ajax({
+            type: "POST",
+            url: "/Payroll/UpDateSalary",
+            data: form,
+            dataType: "json",
+            success: function (data) {
+                debugger
+                if (data == true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Notice Create Success',
+                        icon: 'success',
+                        position: 'top-right'
+                    })
+                }
+
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Create Failed Please fill out the Required Details',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+
+                }
+                $("#ResetButton").click();
+                $('.Employee-info').css("display", "none");
+
+            },
+            error: function (data) {
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Salary Detail Add Failed.',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+        });
+    });
+
+    $(document).ready(function () {
+
+        $(".View-Details").on('click', function () {
+            var id = this.id;
+            $.ajax({
+                type: "GET",
+                url: "/Payroll/ViewSalaryDetails",
+                data: { "EmployeeId": id },
+                success: function (response) {
+                    if (response != false) {
+                        $('.Salary-detail-modal').modal('toggle');
+                        $('#Salary-detail-content').html(response);
+                    } else {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'No Salary Details For the Particular Employee!!',
+                            icon: 'error',
+                            position: 'top-right'
+                        })
+                    }
+
+                },
+            })
+        });
+
+
+        let employee_id = $('#Employee_id').val();
+        $.ajax({
+            type: "GET",
+            url: "/Payroll/GetEmployeeDetailsById",
+            data: { EmployeeId: employee_id },
+            dataType: "json",
+            success: function (data) {
+                if (data.employee_Id > 0) {
+                    let dob = new Date(data.dob);
+                    let dobmonth = dob.getMonth() + 1;
+                    let enrollDate = new Date(data.joining_date);
+                    let enrollmonth = enrollDate.getMonth() + 1;
+                    let gender;
+                    if (data.genderEnum == 0) {
+                        gender = "Male"
+                    } else if (data.genderEnum == 1) {
+                        gender = "Female"
+                    } else {
+                        gender = "Other"
+                    }
+                    let Status = "InActive";
+                    if (data.is_Active) {
+                        Status = "Active";
+                    }
+                    let Contact = data.contact_1;
+                    if (data.contact_2 != null) {
+                        Contact = Contact + "," + data.contact_2;
+                    }
+
+                    $('#EmployeeId').html(data.employee_Id);
+                    $('#EmployeeNo').html(data.employeeNumber);
+                    $('#Department').html(data.departmentViewModel.department_name);
+                    $('#Address').html(data.address);
+                    $('#Gender').html(gender);
+                    $('#DOB').html(dob.getFullYear() + "-" + dobmonth + "-" + dob.getDate());
+
+                    $('#EmployeeName').html(data.fullName);
+                    $('#Email').html(data.email);
+                    $('#Designation').html(data.designationViewModel.designation_name);
+                    $('#Contact').html(Contact);
+                    $('#Status').html(Status);
+                    $('#EnrollDate').html(enrollDate.getFullYear() + "-" + enrollmonth + "-" + enrollDate.getDate());
+
+                    $('.Employee-info').css("display", "block");
+                } else {
+
+                    $('.Employee-info').css("display", "none");
+
+                    $('#EmployeeId').html("");
+                    $('#Department').html("");
+                    $('#Address').html("");
+                    $('#Gender').html("");
+                    $('#DOB').html("");
+
+                    $('#EmployeeName').html("");
+                    $('#Designation').html("");
+                    $('#Contact').html("");
+                    $('#Status').html("");
+                    $('#EnrollDate').html("");
+                }
+
+            }
+        });
+    });
+
+
+    $('#ResetButton').on('click', function () {
+        $('.Employee-info').css("display", "none");
+    });
+
+</script>

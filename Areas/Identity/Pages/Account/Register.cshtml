@@ -1,0 +1,196 @@
+﻿@page
+@model RegisterModel
+@{ ViewData["Title"] = "Register"; }
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+
+    <!-- Meta data -->
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <meta content="DayOne - It is one of the Major Dashboard Template which includes - HR, Employee and Job Dashboard. This template has multipurpose HTML template and also deals with Task, Project, Client and Support System Dashboard." name="description">
+    <meta content="Spruko Technologies Private Limited" name="author">
+    <meta name="keywords" content="admin dashboard, dashboard ui, backend, admin panel, admin template, dashboard template, admin, bootstrap, laravel, laravel admin panel, php admin panel, php admin dashboard, laravel admin template, laravel dashboard, laravel admin panel" />
+
+    <!-- Title -->
+    <title>Dayone - Multipurpose Admin & Dashboard Template</title>
+
+    <!--Favicon -->
+    <link rel="icon" href="assets/images/brand/favicon.ico" type="image/x-icon" />
+
+    <!-- Bootstrap css -->
+    <link href="assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    <!-- Style css -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/dark.css" rel="stylesheet" />
+    <link href="assets/css/skin-modes.css" rel="stylesheet" />
+
+    <!-- Animate css -->
+    <link href="assets/plugins/animated/animated.css" rel="stylesheet" />
+
+    <!---Icons css-->
+    <link href="assets/plugins/icons/icons.css" rel="stylesheet" />
+
+    <!-- Select2 css -->
+    <link href="assets/plugins/select2/select2.min.css" rel="stylesheet" />
+
+    <!-- P-scroll bar css-->
+    <link href="assets/plugins/p-scrollbar/p-scrollbar.css" rel="stylesheet" />
+
+
+
+    <!-- INTERNAL Switcher css -->
+    <link href="assets/switcher/css/switcher.css" rel="stylesheet" />
+    <link href="assets/switcher/demo.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+
+    <div class="page login-bg">
+        <div class="page-single">
+            <div class="container">
+                <div class="row">
+                    <div class="col mx-auto">
+                        <div class="row justify-content-center">
+                            <div class="card">
+                                <div class="p-4 pt-6 text-center">
+                                    <h1 class="mb-2">Register</h1>
+                                    <p class="text-muted">Create new account</p>
+                                </div>
+                                <form class="card-body pt-3" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                    <div class="row">
+                                        <div class="col">
+
+                                            <div class="form-group">
+                                                <label asp-for="Input.Employee_id" class="form-label"></label>
+                                                <select asp-for="Input.Employee_id" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable) ViewData["employeeList"], "Value", "Text"))">
+                                                    <option selected disabled> Select User</option>
+                                                </select>
+                                                <span asp-validation-for="Input.Employee_id" class="text-danger"></span>
+                                            </div>
+
+
+                                            @*<div class="form-group">3
+                                                    <label asp-for="Input.Email" class="form-label"></label>
+                                                    <input asp-for="Input.Email" class="form-control" placeholder="Email" type="email">
+                                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                                </div>*@
+
+                                            @*<div class="form-group">
+                                                <label asp-for="Input.Email" class="form-label"></label>
+                                                <select asp-for="Input.Email" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable) ViewData["emailList"], "Value", "Text"))">
+                                                    <option selected disabled> Select Email</option>
+                                                </select>
+                                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                            </div>*@
+
+                                            @*<div class="form-group">
+                                                <label class="form-label required">Email</label>
+
+
+                                                <input asp-for="Input.Email" hidden class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable) ViewData["emailList"], "Value", "Text"))" />
+                                                <input asp-items="@(new SelectList((System.Collections.IEnumerable) ViewData["emailList"], "Value", "Text"))" class="form-control" readonly />
+                                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+
+
+                                            </div>*@
+
+                                            @*<div class="form-group">
+                                                <label asp-for="Input.FullName" class="form-label"></label>
+                                                    <input asp-for="Input.FullName" class="form-control" placeholder="FullName" type="text">
+                                                    <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                                                </div>*@
+
+                                            @*<div>
+                                                    <input asp-for="Input.FullName" hidden class="form-control" value="@ViewBag.Employee" />
+                                                    <input value="@ViewBag.EmployeeName" class="form-control" readonly />
+                                                    <span asp-validation-for="LeaveVM.Employee_id" class="text-danger"></span>
+                                                </div>
+
+                                                <input type="hidden" asp-for="Leave_id" />*@
+
+                                            <div class="form-group">
+                                                <label asp-for="Input.UserRoleId" class="form-label"></label>
+                                                <select asp-for="Input.UserRoleId" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable) ViewData["rolesList"], "Value", "Text"))">
+                                                    <option selected disabled> select one role</option>
+                                                </select>
+                                                <span asp-validation-for="Input.UserRoleId" class="text-danger"></span>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col">
+
+                                            <div class="form-group">
+                                                <label asp-for="Input.UserName" class="form-label"></label>
+                                                <input asp-for="Input.UserName" class="form-control" placeholder="UserName" type="text">
+                                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label asp-for="Input.Password" class="form-label"></label>
+                                                <input asp-for="Input.Password" class="form-control" placeholder="password" type="password">
+                                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                                                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm password" type="password">
+                                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                            </div>
+
+                                            <br><br>
+                                            <div class="submit" style="margin-left:450px;">
+                                                <button type="submit" class="btn btn-primary">Register</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="text-center mt-4">
+                                        <p class="text-dark mb-0">Already have an account?<a class="text-primary ml-1" id="Login" asp-page="./Login">LogIn</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Jquery js-->
+    <script src="assets/plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap4 js-->
+    <script src="assets/plugins/bootstrap/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+    <!-- Select2 js -->
+    <script src="assets/plugins/select2/select2.full.min.js"></script>
+
+    <!-- P-scroll js-->
+    <script src="assets/plugins/p-scrollbar/p-scrollbar.js"></script>
+
+    <!-- Custom js-->
+    <script src="assets/js/custom.js"></script>
+
+    <!-- Switcher js -->
+    <script src="assets/switcher/js/switcher.js"></script>
+
+</body>
+</html>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

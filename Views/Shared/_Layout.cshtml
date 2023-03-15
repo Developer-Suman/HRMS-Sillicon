@@ -1,0 +1,640 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HRMS_Silicon</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link href="~/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
+
+    @*@using Microsoft.AspNetCore.Identity
+    @inject SignInManager<ApplicationUser> SignInManager
+    @inject UserManager<ApplicationUser> UserManager*@
+    <!--CDN-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--Favicon -->
+    <link rel="icon" href="~/Img/logo.png" type="image/x-icon" />
+
+    <!-- Bootstrap css -->
+    <link href="~/assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    <!-- Style css -->
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <link href="~/assets/css/dark.css" rel="stylesheet" />
+    <link href="~/assets/css/skin-modes.css" rel="stylesheet" />
+
+    <!-- Animate css -->
+    <link href="~/assets/plugins/animated/animated.css" rel="stylesheet" />
+
+    <!--Sidemenu css -->
+    <link href="~/assets/css/sidemenu.css" rel="stylesheet">
+
+    <!-- P-scroll bar css-->
+    <link href="~/assets/plugins/p-scrollbar/p-scrollbar.css" rel="stylesheet" />
+
+    <!---Icons css-->
+    <link href="~/assets/plugins/icons/icons.css" rel="stylesheet" />
+
+    <!---Sidebar css-->
+    <link href="~/assets/plugins/sidebar/sidebar.css" rel="stylesheet" />
+
+    <!-- Select2 css -->
+    <link href="~/assets/plugins/select2/select2.min.css" rel="stylesheet" />
+
+
+    <!-- INTERNAL Pg-calendar-master css -->
+    <link href="~/assets/plugins/pg-calendar-master/pignose.calendar.css" rel="stylesheet" />
+
+    <!--- INTERNAL jvectormap css-->
+    <link href="~/assets/plugins/jvectormap/jqvmap.css" rel="stylesheet" />
+
+    <!-- INTERNAL Time picker css -->
+    <link href="~/assets/plugins/time-picker/jquery.timepicker.css" rel="stylesheet" />
+
+    <!-- INTERNAL Data table css -->
+    <link href="~/assets/plugins/datatable/datatables.min.css" rel="stylesheet" />
+    <link href="~/assets/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/assets/plugins/datatable/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/assets/plugins/datatable/css/buttons.bootstrap4.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/datatable/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <!-- INTERNAL jQuery-countdowntimer css -->
+    <link href="~/assets/plugins/jQuery-countdowntimer/jQuery.countdownTimer.css" rel="stylesheet" />
+
+    <!-- INTERNAL Daterangepicker css-->
+    <link rel="~/stylesheet" href="assets/plugins/daterangepicker/daterangepicker.css">
+
+
+    <!-- INTERNAL Switcher css -->
+    <link href="~/assets/switcher/css/switcher.css" rel="stylesheet" />
+    <link href="~/assets/switcher/demo.css" rel="stylesheet" />
+
+</head>
+<body class="app sidebar-mini" id="index1">
+
+    @*<div id="global-loader">
+    <img src="~/assets/images/svgs/loader.svg" alt="loader">
+    </div>*@
+    <div class="page">
+        <div class="page-main">
+
+            <aside class="app-sidebar">
+                <div class="app-sidebar__logo d-flex justify-content-between align-items-center">
+
+                    <div class="logo-container">
+                        <a id="logo1" class="header-brand" href="/home">
+
+                            @*<img src="~/Img/logo-white.png" class="header-brand-img dark-logo" alt="Siliconlogo" style="height:62px; width:68px;">*@
+                            <img src="~/Img/logo.webp" class="header-brand-img desktop-logo" alt="Siliconlogo" style="height:62px; width:68px;">
+                        </a>
+                    </div>
+
+                    <div class="company-info d-flex flex-column text-white  w-60 side-menu__label ml-4">
+                        <h4 style="font-size: 0.8rem; margin: 0.3em 0;  ">Silicon Soft &amp <br /> IT Consultant Pvt. Ltd.</h4>
+
+                        <a style="font-size: 0.7rem;color:white;font-weight:900;  margin: 0.2em 0" href="https://www.google.com/maps/place/Silicon+Soft+and+IT+Consultant+Pvt.+Ltd./@@27.689242,85.343478,18z/data=!4m12!1m6!3m5!1s0x0:0x5234beec90995f77!2sSilicon+Soft+and+IT+Consultant+Pvt.+Ltd.!8m2!3d27.6892424!4d85.3434782!3m4!1s0x0:0x5234beec90995f77!8m2!3d27.6892424!4d85.3434782?hl=en-GB" target="_blank" rel="noopener noreferrer">
+                            <span>Shantinagar, Kathmandu</span>
+                        </a>
+                        <h5 style="font-size: 0.7rem; margin: 0">+977-9843415029,<br /> 01-4107586</h5>
+
+                    </div>
+
+
+                    @*<div class="app-sidebar__logo" style="text-align:right; margin-top:unset">
+
+                    <ul>
+                    <li>
+
+                    <div>
+                    <span> <i class="fa-solid fa-location-dot"></i> Address:</span>
+                    <a href="https://www.google.com/maps/place/Silicon+Soft+and+IT+Consultant+Pvt.+Ltd./@@27.689242,85.343478,18z/data=!4m12!1m6!3m5!1s0x0:0x5234beec90995f77!2sSilicon+Soft+and+IT+Consultant+Pvt.+Ltd.!8m2!3d27.6892424!4d85.3434782!3m4!1s0x0:0x5234beec90995f77!8m2!3d27.6892424!4d85.3434782?hl=en-GB" target="_blank" rel="noopener noreferrer">
+                    <span>Shantinagar, Kathmandu</span>
+                    </a>
+
+                    </div>
+                    </li>
+                    <li class="phone">
+
+                    <div>
+                    <span> <i class="fa-solid fa-phone"></i> Phone:</span>
+                    <a href="tel:+977-9843415029">
+                    <span>01-4107586</span>
+                    </a>
+
+                    </div>
+                    </li>
+
+                    <li>
+
+                    <div>
+                    <span><i class="fa-solid fa-mobile-screen"></i> Mobile</span>
+                    <a href="tel:+977-9843415029">
+                    <span>+977-9843415029</span>
+                    </a>
+
+                    </div>
+                    </li>
+
+                    <li>
+
+                    <div>
+                    <span>  <i class="fa-solid fa-envelope"></i>Email:</span>
+                    <span>
+                    <a href="mailto:siliconsoftnepal@gmail.com">siliconsoftnepal@gmail.com</a>
+                    </span>
+                    </div>
+                    </li>
+                    </ul>
+                    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+                    @*<img src="~/Img/logo-white.png" class="header-brand-img mobile-logo" alt="Siliconlogo" style="height:22px; width:28px;">*@
+
+
+                </div>
+                <div class="app-sidebar3">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <div class="app-sidebar__user pb-3">
+                            <div class="dropdown user-pro-body text-center">
+
+                                <div class="user-pic">
+                                    <a asp-area="Identity" asp-page="/Account/Manage/Index">
+                                        @*<img src="~/Img/user.jpg" alt="user-img" class="avatar-xxl rounded-circle mb-1">*@
+                                        @*<div class="emp-award" data-toggle="tooltip" data-placement="top" title="Best Employee Of The Year"><i class="fa fa-trophy"></i></div>*@
+                                        <!--</a>-->
+                                        @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+                                        {
+                                            @*<img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,
+                                    @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">*@
+                                            <img class="rounded-circle mb-1" style="width:100px;height:100px; object-fit:cover; border-radius:30px" src="data:image/*;base64,
+                             @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+
+                                            @*<img class="avatar-xxl rounded-circle mb-1" src="data:image/*;base64,
+                                    @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">*@
+                                        }
+                                        else
+                                        {
+                                            @*<img id="profilePicture" style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="">*@
+                                            <img src="~/Img/user.jpg" alt="user-img" class="avatar-xxl rounded-circle mb-1">
+                                        }
+
+                                    </a>
+                                </div>
+                                <div class="user-info">
+
+
+                                    @{
+                                        var currentUser = @UserManager.GetUserAsync(User).Result;
+
+                                        if (User.IsInRole("Manager") || User.IsInRole("HRManager") || User.IsInRole("Employee"))
+                                        {
+
+                                            <h5 class=" mb-2">@UserManager.GetUserAsync(User).Result.Employee.FullName</h5>
+
+
+                                        }
+                                        else
+                                        {
+                                            <h5 class="mb-2 name-display">@UserManager.GetUserAsync(User).Result.UserName</h5>
+                                        }
+                                        <span class="text-muted app-sidebar__user-name text-sm">@UserManager.GetUserAsync(User).Result.UserRole</span>
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <ul class="side-menu">
+                            <li class="side-item side-item-category mt-4">Dashboards</li>
+
+                            <li class="slide">
+                                <a class="side-menu__item" data-toggle="slide" href="/home">
+
+                                    @*<a class="side-menu__item" data-toggle="slide" href="/home">*@
+                                    <i class="feather feather-home sidemenu_icon"></i>
+                                    <span class="side-menu__label">HomePage</span>
+                                </a>
+                            </li>
+
+                            <li class="slide">
+                                <a class="side-menu__item" data-toggle="slide" href="#">
+
+                                    <i class="feather feather-calendar sidemenu_icon"></i>
+                                    <span class="side-menu__label">Task Manager</span><i class="angle fa fa-angle-right"></i>
+                                </a>
+                                <ul class="slide-menu">
+                                    <li class="sub-slide">
+                                        <a class="sub-side-menu__item" data-toggle="sub-slide" asp-controller="TaskManager"  asp-action="Dashboard"><span class="sub-side-menu__label">Task Dashboard</span></a>
+                                    </li>
+                                    <li class="sub-slide">
+                                        <a class="sub-side-menu__item" data-toggle="sub-slide" href="/TaskManager/AllTasks"><span class="sub-side-menu__label">All Tasks</span></a>
+                                    </li>
+                                    <li class="sub-slide">
+                                        <a class="sub-side-menu__item" data-toggle="sub-slide" href="/TaskManager/TasksProgress"><span class="sub-side-menu__label">Tasks Progress</span></a>
+                                    </li>
+                                    <li class="sub-slide">
+                                        <a class="sub-side-menu__item" data-toggle="sub-slide" href="/TaskManager/Projects"><span class="sub-side-menu__label">Projects</span></a>
+                                    </li>
+                                    <li class="sub-slide">
+                                        <a class="sub-side-menu__item" data-toggle="sub-slide" href="/TaskManager/UpdateTasks"><span class="sub-side-menu__label">Update Tasks</span></a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+
+                            @*only can be viewed by Admin if role is Admin.*@
+
+                            @*@if (User.IsInRole("Admin"))*@
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("HRManager"))
+                            {
+
+                                <li class="slide">
+                                    <a class="side-menu__item" data-toggle="slide" href="#">
+
+                                        @*<a class="side-menu__item" data-toggle="slide" href="/home">*@
+                                        <i class="feather feather-target sidemenu_icon"></i>
+                                        <span class="side-menu__label">HR Dashboard</span><i class="angle fa fa-angle-right"></i>
+                                    </a>
+                                    <ul class="slide-menu">
+                                        <li class="sub-slide"> 
+                                             <a class="sub-side-menu__item" data-toggle="sub-slide"  href="/designation"><span class="sub-side-menu__label">Designation</span></a>
+
+                                            @*<a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Designation</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                            <ul class="sub-slide-menu">
+                                                <li><a class="sub-slide-item" href="/designation">Designation List</a></li>
+                                                <li><a class="sub-slide-item" href="/designation/Create">Add Designation</a></li>
+                                            </ul>*@
+                                        </li>
+                                        <li class="sub-slide">
+                                            <a class="sub-side-menu__item" data-toggle="sub-slide"  href="/department"><span class="sub-side-menu__label">Department</span></a>
+                                           @* <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Department</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                            <ul class="sub-slide-menu">
+                                                <li><a class="sub-slide-item" href="/department">Department List</a></li>
+                                                <li><a class="sub-slide-item" href="/department/Create">Add Department</a></li>
+                                            </ul>*@
+                                        </li>
+                                        <li class="sub-slide">
+                                            
+                                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Employee</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                            <ul class="sub-slide-menu">
+                                                <li><a class="sub-slide-item" href="/employee">Employee List</a></li>
+                                                <li><a class="sub-slide-item" href="/employee/Create">Add Employee</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                              
+                            
+
+                                <li class="slide">
+                                    <a class="side-menu__item" data-toggle="slide" href="/Payroll/SalaryDetails">
+                                        <i class="feather  feather-info sidemenu_icon"></i>
+                                        <span class="side-menu__label">Payroll</span>
+                                        @*<i class="angle fa fa-angle-right"></i>*@
+                                    </a>
+
+                                   @* <ul class="slide-menu">
+                                        <li class="sub-slide">
+                                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Salary Details</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                            <ul class="sub-slide-menu">
+                                                <li><a class="sub-slide-item" href="/Payroll/SalaryDetails">Salary Details list</a></li>
+
+                                            </ul>
+                                        </li>
+                                    </ul>*@
+                                </li>
+                            }
+
+                            @*can be viewed by  Everyone.*@
+
+                            <li class="slide">
+                                <a class="side-menu__item" data-toggle="slide" href="#">
+                                    <i class="feather  feather-users sidemenu_icon"></i>
+                                    <span class="side-menu__label">Attendence Dashboard</span><i class="angle fa fa-angle-right"></i>
+                                </a>
+                                <ul class="slide-menu">
+                                    <li class="sub-slide">
+                                        <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Leave</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                        <ul class="sub-slide-menu">
+                                            <li><a class="sub-slide-item" href="/leave">Leave List</a></li>
+                                            <li><a class="sub-slide-item" href="/leave/Create">Apply Leave</a></li>
+                                        </ul>
+                                    </li>
+                                    @*<li class="sub-slide">
+                                <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Attendence</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                <ul class="sub-slide-menu">
+                                <li><a class="sub-slide-item" href="/attendence">Attendence List</a></li>
+                                <li><a class="sub-slide-item" href="/attendence/Create">Add Attendence</a></li>
+                                </ul>
+                                </li>
+                                <li class="sub-slide">
+                                <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Resignation</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                <ul class="sub-slide-menu">
+                                <li><a class="sub-slide-item" href="#">Resignation List</a></li>
+                                <li><a class="sub-slide-item" href="#">Add Resignation</a></li>
+                                </ul>
+                                </li>*@
+                                </ul>
+                            </li>
+
+                            @*these all are commmented just for live purpose, after publishing you can uncomment and make other workable.*@
+
+                            @*<li class="slide">
+                        <a class="side-menu__item" data-toggle="slide" href="#">
+                        <i class="feather feather-clipboard sidemenu_icon"></i>
+                        <span class="side-menu__label">Task Dashboard</span><i class="angle fa fa-angle-right"></i>
+                        </a>
+                        <ul class="slide-menu">
+                        <li class="sub-slide">
+                        <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Task</span><i class="sub-angle fa fa-angle-right"></i></a>
+                        <ul class="sub-slide-menu">
+                        <li><a class="sub-slide-item" href="#">Task List</a></li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <li><a class="sub-slide-item" href="#">Add Task</a></li>
+                        }
+                        </ul>
+                        </li>
+                        <li class="sub-slide">
+                        <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Task Category</span><i class="sub-angle fa fa-angle-right"></i></a>
+                        <ul class="sub-slide-menu">
+                        <li><a class="sub-slide-item" href="#">TaskCategory List</a></li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <li><a class="sub-slide-item" href="#">Add TaskCategory</a></li>
+                        }
+                        </ul>
+                        </li>
+                        </ul>
+                        </li>*@
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="slide">
+                                    <a class="side-menu__item" data-toggle="slide" href="#">
+                                        <i class="feather feather-info sidemenu_icon"></i>
+                                        <span class="side-menu__label">Events</span><i class="angle fa fa-angle-right"></i>
+                                    </a>
+                                    <ul class="slide-menu">
+                                        <li class="sub-slide">
+                                            <a class="sub-side-menu__item" data-toggle="sub-slide"  href="/Notice"><span class="sub-side-menu__label">Notice List</span></a>
+                                           @* <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Notice</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                            <ul class="sub-slide-menu">
+                                                <li><a class="sub-slide-item" href="/Notice">Notice List</a></li>
+                                            </ul>*@
+                                        </li>
+                                        <li class="sub-slide">
+                                             <a class="sub-side-menu__item" data-toggle="sub-slide"  href="/Holiday"><span class="sub-side-menu__label">Holiday List</span></a>
+                                           @* <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Holiday </span><i class="sub-angle fa fa-angle-right"></i></a>
+                                            <ul class="sub-slide-menu">
+                                                <li><a class="sub-slide-item" href="/Holiday">Holiday List</a></li>
+                                            </ul>*@
+                                        </li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li class="slide">
+                                    <a class="side-menu__item" asp-controller="AllUsers" asp-action="ListUsers">
+                                        <i class="feather feather-user-check sidemenu_icon"></i>
+                                        <span class="side-menu__label">All Users</span>
+                                    </a>
+                                </li>
+
+                                <li class="slide">
+                                    <a class="side-menu__item" href="/Identity/Account/Register">
+                                        <i class="feather feather-user-plus sidemenu_icon"></i>
+                                        <span class="side-menu__label">Register</span>
+                                    </a>
+                                </li>
+
+                                @*<li class="slide">
+                        <a class="side-menu__item" href="#">
+                        <i class="feather feather-settings sidemenu_icon"></i>
+                        <span class="side-menu__label">Setting</span>
+                        </a>
+                        </li>*@
+                            }
+
+
+                            @*<li class="slide">
+                        <a class="side-menu__item" href="/Identity/Account/Login">
+                        <i class="feather feather-log-in sidemenu_icon"></i>
+                        <span class="side-menu__label">Login</span>
+                        </a>
+                        </li>*@
+                            <li class="slide">
+                                <form class="form-inline" id="logout-form" style="display:none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+                                </form>
+                                <a class="side-menu__item" onclick="$('#logout-form').submit();" style="cursor:pointer">
+                                    <i class="feather feather-log-out sidemenu_icon"></i>
+                                    <span class="side-menu__label"> Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+
+                    else
+                    {
+                        <ul>
+                            <li class="slide">
+                                <a class="side-menu__item" href="/Identity/Account/Login">
+                                    <i class="feather feather-log-in sidemenu_icon"></i>
+                                    <span class="side-menu__label"> Login</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                </div>
+            </aside>
+
+            <div class="app-content main-content">
+                <div class="side-app">
+                    <!--app header-->
+                    <div class="app-header header">
+                        <div class="container-fluid">
+                            <div class="d-flex">
+                                @*<a class="header-brand" href="#">
+                                <img src="~/Img/logo.png" class="header-brand-img desktop-lgo" alt="Dayonelogo">
+                                <img src="~/Img/logo.png" class="header-brand-img dark-logo" alt="Dayonelogo">
+                                <img src="~/Img/logo.png" class="header-brand-img mobile-logo" alt="Dayonelogo">
+                                <img src="~/Img/logo.png" class="header-brand-img darkmobile-logo" alt="Dayonelogo">
+                                </a>*@
+                                <div class="app-sidebar__toggle" data-toggle="sidebar">
+                                    <a class="open-toggle" href="#">
+                                        <i class="feather feather-menu"></i>
+                                    </a>
+                                    <a class="close-toggle" href="#">
+                                        <i class="feather feather-x"></i>
+                                    </a>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/app header-->
+
+                    <div class="mt-4">
+                        @*@Html.Partial("message")*@
+
+                        @RenderBody()
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <!--Footer-->
+        <footer class="footer">
+            <div class="container">
+                <div class="row align-items-center flex-row-reverse">
+                    <div class=" col-sm-12 col-md-12 mt-3 mt-lg-0 text-center">
+                        <p>
+                            Copyright © 2022 <a href="#">HRMS_Silicon</a>. Designed by <a href="#">Silicon Soft and I.T. Consultant Pvt. Ltd.</a> All rights reserved.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer-->
+    </div>
+
+
+
+
+    <!-- Back to top -->
+    <a href="/" id="back-to-top"><span class="feather feather-chevrons-up"></span></a>
+
+    <!--Moment js-->
+    <script src="~/assets/plugins/moment/moment.js"></script>
+
+    <!-- Jquery js-->
+    <script src="~/assets/plugins/jquery/jquery.min.js"></script>
+
+    @*jquery css and js*@
+    <link href="~/lib/JqueryToast/jquery.toast.css" rel="stylesheet" />
+    <script src="~/lib/JqueryToast/jquery.toast.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+    <!-- Bootstrap4 js-->
+    <script src="~/assets/plugins/bootstrap/popper.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--Othercharts js-->
+    <script src="~/assets/plugins/othercharts/jquery.sparkline.min.js"></script>
+
+    <!-- Circle-progress js-->
+    <script src="~/assets/plugins/circle-progress/circle-progress.min.js"></script>
+
+    <!--Sidemenu js-->
+    <script src="~/assets/plugins/sidemenu/sidemenu.js"></script>
+
+    <!-- P-scroll js-->
+    <script src="~/assets/plugins/p-scrollbar/p-scrollbar.js"></script>
+    <script src="assets/plugins/p-scrollbar/p-scroll1.js"></script>
+    <!--Sidebar js-->
+    <script src="~/assets/plugins/sidebar/sidebar.js"></script>
+    <!-- Select2 js -->
+    <script src="~/assets/plugins/select2/select2.full.min.js"></script>
+
+
+    <!-- INTERNAL Datepicker js -->
+    <script src="~/assets/plugins/date-picker/jquery-ui.js"></script>
+
+    <!-- INTERNAL Apexchart js-->
+    <script src="~/assets/plugins/apexchart/apexcharts.js"></script>
+
+    <!-- INTERNAL Timepicker js -->
+    <script src="~/assets/plugins/time-picker/jquery.timepicker.js"></script>
+    <script src="~/assets/plugins/time-picker/toggles.min.js"></script>
+
+    <!--INTERNAL Chart js -->
+    <script src="~/assets/plugins/chart/chart.bundle.js"></script>
+    <script src="~/assets/plugins/chart/utils.js"></script>
+
+    <!-- INTERNAL Chartjs rounded-barchart -->
+    <script src="~/assets/plugins/chart.min/chart.min.js"></script>
+    <script src="~/assets/plugins/chart.min/rounded-barchart.js"></script>
+
+    <!-- INTERNAL Data tables -->
+    <script src="~/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.bootstrap4.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/assets/plugins/datatable/dataTables.responsive.min.js"></script>
+    <script src="~/assets/plugins/datatable/responsive.bootstrap4.min.js"></script>
+
+    <!-- INTERNAL Pg-calendar-master js -->
+    <script src="~/assets/plugins/pg-calendar-master/pignose.calendar.full.min.js"></script>
+
+    <!-- INTERNAL jQuery-countdowntimer js -->
+    <script src="~/assets/plugins/jQuery-countdowntimer/jQuery.countdownTimer.js"></script>
+
+    <!-- INTERNAL Daterangepicker js-->
+    <script src="~/assets/plugins/daterangepicker/moment.min.js"></script>
+    <script src="~/assets/plugins/daterangepicker/daterangepicker.js"></script>
+
+    <!-- INTERNAL Index js-->
+    <script src="~/assets/js/employee/emp-sidemenuchart.js"></script>
+
+
+    <!-- Custom js-->
+    <script src="~/assets/js/custom.js"></script>
+
+    <!-- Switcher js -->
+    <script src="~/assets/switcher/js/switcher.js"></script>
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    <script src="~/assets/js/index2.js"></script>
+    @*<script>
+    $(document).ready(function () {
+    var id = $('.name-display').attr('id')
+
+    $.ajax({
+    type: "GET",
+    url: "/Home/GetCurrentUsersFullname",
+    data: { Id: id },
+    success: function (data) {
+    debugger
+    $('.name-display').html(data);
+    }
+    })
+
+    })
+    </script>*@
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+</body>
+
+
+</html>

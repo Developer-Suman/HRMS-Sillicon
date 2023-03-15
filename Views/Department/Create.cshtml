@@ -1,0 +1,83 @@
+﻿@model HRMS_Silicon.ViewModel.DepartmentIndexVM
+
+
+
+<hr />
+
+<div class="container" style="max-width:785px;">
+
+    <div class="row">
+        <div class="col-lg-7 col-xl-7 col-md-6 col-sm-7">
+            <div class="card">
+                <div class="card-header border-bottom-0">
+                    <h4 class="card-title">Add Department</h4>
+                </div>
+                <div class="card-body">
+                    <form class="form-horizontal" asp-action="Create" method="post">
+                        <div class="form-group row">
+                            <label for="inputName" class="col-md-3 form-label">Department Name</label>
+                            <div class="col-md-9">
+                                <input type="text" asp-for="DepartmentViewModel.Department_name" class="form-control" id="inputName" placeholder="Name">
+                                <span asp-validation-for="DepartmentViewModel.Department_name" class="text-danger"></span>
+
+                            </div>
+
+                            @*<div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="DepartmentViewModel.is_active" /> @Html.DisplayNameFor(model => model.DepartmentViewModel.is_active)
+                                </label>
+                            </div>*@
+
+
+
+                        </div>
+
+
+                        <div class="form-group mb-0 mt-4 row justify-content-end">
+                            <div class="col-md-9">
+                                <button class="btn btn-primary" type="submit" value="Create">Create</button>
+                                <button class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Department_name" class="control-label"></label>
+                    <input asp-for="Department_name" class="form-control" />
+                    <span asp-validation-for="Department_name" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Is_active" /> @Html.DisplayNameFor(model => model.Is_active)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@

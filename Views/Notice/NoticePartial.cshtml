@@ -1,0 +1,40 @@
+﻿@model HRMS_Silicon.ViewModel.NoticeViewModel
+
+<style>
+
+    .Notice-Container {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        font-size: 18px;
+        font-family: Roboto,sans-serif;
+    }
+
+    .Notice-date {
+        align-self: flex-end;
+        font-weight: bold;
+    }
+
+    .Notice-Subject {
+        font-weight: bold;
+        align-self: center;
+    }
+
+    .Notice-Description p {
+        text-indent: 20%;
+        font-size:14px;
+    }
+</style>
+
+<div class="Notice-Container">
+    <div class="Notice-date">
+        Date: @Model.NoticeDate.ToShortDateString()
+    </div>
+    <div class="Notice-Subject">Subject: @Model.Subject</div>
+    <div class="Notice-Description">
+        <p>
+            @Model.Description
+        </p>
+
+    </div>
+</div>
