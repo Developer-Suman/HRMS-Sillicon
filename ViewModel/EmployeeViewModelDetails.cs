@@ -24,6 +24,7 @@ namespace HRMS_Silicon.ViewModel
         public EmployeeViewModel()
         {
             DesignationViewModel = new DesignationViewModel();
+            DepartmentViewModel = new DepartmentViewModel();
           
             
             //DepartmentViewModel = new DepartmentViewModel();

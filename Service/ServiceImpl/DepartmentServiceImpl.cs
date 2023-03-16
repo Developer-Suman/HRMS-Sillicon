@@ -101,15 +101,15 @@ namespace HRMS_Silicon.Service.ServiceImpl
         {
             try
             {
-                var checkEmployee = _unitOfWorkRepoImpl.Repository<Employee>().Where(x=>x.Department_id == Department_id);
-                /*ar checkEmployees = checkEmployee.SingleOrDefault();*/
+                //var checkEmployee = _unitOfWorkRepoImpl.Repository<Employee>().Where(x=>x.Department_id == Department_id);
+                ///*ar checkEmployees = checkEmployee.SingleOrDefault();*/
 
-                if(checkEmployee != null)
-                {
-                    return false;
-                }
-                else
-                {
+                //if(checkEmployee != null)
+                //{
+                //    return false;
+                //}
+                //else
+                //{
                     var department = _unitOfWorkRepoImpl.Repository<Department>().getById(Department_id);
                     if (department.Is_Active)
                     {
@@ -123,7 +123,7 @@ namespace HRMS_Silicon.Service.ServiceImpl
                     _unitOfWorkRepoImpl.Repository<Department>().update(department);
                     _unitOfWorkRepoImpl.Commit();
                     return true;
-                }
+                //}
                 
             }
             catch (Exception ex)
